@@ -1,0 +1,19 @@
+{
+  "name": "tegh browser-plugin",
+  "version": "0.0.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "*",
+    "jquery": "1.10.2",
+    "lodash": "2.2.1",
+    "auto-reload-brunch": "*",
+    "bootstrap-stylus": "*"
+    }
+}

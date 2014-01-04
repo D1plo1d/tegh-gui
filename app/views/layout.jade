@@ -1,0 +1,67 @@
+doctype
+//if lt IE 7 ]><html class="ie ie6" lang="en">
+//if IE 7 ]><html class="ie ie7" lang="en">
+//if IE 8 ]><html class="ie ie8" lang="en">
+// [if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]
+head
+  meta(charset='utf-8')
+  title Tegh
+  meta(name='description', content='')
+  meta(name='author', content='')
+  //- Mobile Specific
+  meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+  //- CSS
+  link(rel='stylesheet', href='css/app.css')
+
+body
+  #main-container
+
+    //- Header
+    header.container
+      .row
+        .col-sm-12
+          //- Navigation
+          .pull-right
+            ul.nav.nav-pills
+              //- each tab, i in ['print_queue', 'manual_ctrl', 'settings']
+              each tab, i in ['print_queue', 'manual_ctrl']
+                //- each tab, i in ['print_queue']
+                li(class="#{i == 0 ? 'active' : ''}")
+                  a(href= '##{tab}', data-toggle="pill", class="#{tab}_nav")= tab.titleize()
+          //- Title
+          h1 Ctrl Panel 
+            span.name Ultimaker 2
+
+    //- Body
+    .content.container
+      .row
+        .col-sm-12
+          block content
+
+    //- Footer
+    footer.container
+      .row
+        .col-sm-12
+
+          .pull-right
+            if false
+              .btn.btn-danger E STOP
+            a.btn-new-print-job.btn(href="#")
+              i.icon-plus
+              | Print Job
+
+          if false
+            .temperature
+              .name PLA Extruder:
+              .value 172&deg;C
+            .temperature
+              .name ABS Extruder:
+              .value 168&deg;C
+            .temperature
+              .name Build Platform:
+              .value 98&deg;C
+
+    
+  script(src='js/vendor.js')
+  script(src='js/app.js')

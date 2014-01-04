@@ -1,0 +1,36 @@
+{
+  "author": "Przemysław Kamiński",
+  "name": "brunch-on-asteroids",
+  "description": "Brunch with AngularJS, Twitter Bootstrap + Bootswatch, SASS and CoffeeScript/LiveScript enabled and optional modules",
+  "version": "0.0.1",
+  "homepage": "https://github.com/exlee/brunch-on-asteroids",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/exlee/brunch-on-asteroids"
+  },
+  "engines": {
+    "node": "~0.6.10 || 0.8 || 0.9"
+  },
+  "scripts": {
+    "start": "brunch watch --server",
+    "build": "brunch build --optimize",
+    "test": "brunch test"
+  },
+  "dependencies": {
+    "sugar": "*",
+    "jade-brunch": ">= 1.0 < 1.5",
+    "static-jade-brunch": ">= 1.0 < 1.5",
+    "javascript-brunch": ">= 1.0 < 1.5",
+    "LiveScript-brunch": ">= 1.0 < 1.5",
+    "coffee-script-brunch": "=> 1.0 < 1.5",
+    "coffeelint-brunch": ">= 1.0 < 1.5",
+    "auto-reload-brunch": "~1.4.0",
+    "css-brunch": ">= 1.0 < 1.5",
+    "sass-brunch": ">= 1.0 < 1.5",
+    "less-brunch": ">= 1.0 < 1.5",
+    "uglify-js-brunch": ">= 1.0 < 1.5",
+    "clean-css-brunch": ">= 1.0 < 1.5",
+    "stylus-brunch": "1.*"
+  },
+  "devDependencies": {}
+}

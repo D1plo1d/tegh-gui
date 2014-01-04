@@ -1,0 +1,57 @@
+extends layout
+block content
+
+  .tab-content
+
+
+    #print_queue.tab-pane.active
+      table.table.table-striped
+        thead
+          tr
+            th
+            th
+            th Qty
+        tbody
+          tr
+            td Prusa Mendel Bottom Vertex
+            td 
+            td 4
+          tr
+            td Prusa Mendel Top Vertex
+            td 
+            td 2
+
+          tr
+            td Prusa Mendel Y Carriage
+            td 
+            td 1
+
+
+    #manual_ctrl.tab-pane
+      include ./ctrl_panel
+
+    #settings.tab-pane
+      |Settings
+      .form.form-inline.pull-right
+        label.radio.inline
+          input(type="radio", name="units-radio", value="mm")
+          | Inches
+        label.radio.inline
+          input(type="radio", name="units-radio", value="inches")
+          | Millimeters
+      h3 Units
+
+mixin console
+  .console-panel.col-sm-6.pull-right
+    h3 Console
+    .console-history.well
+      .c Connecting....
+      .c Connected
+      .c G1 x90
+      .c G1 x190
+      .c G1 x90
+      .c G1 x190
+      .c G1 x90
+    .console-form
+      input(type='text')
+      .btn Submit

@@ -1,0 +1,25 @@
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+pids
+logs
+results
+
+node_modules
+npm-debug.log
+
+_public
+bower_components
+app/assets/*.html
+app/assets/**/*.html
+.DS_Store
+**/.DS_Store
+
+# This ones are generated, so we ignore them
+vendor/styles/bootstrap.less

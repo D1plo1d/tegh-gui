@@ -1,0 +1,79 @@
+@import "../../bower_components/bootstrap-stylus/stylus/bootstrap"
+@import "../../vendor/bootstrap-toggle-buttons.css"
+@import "../../vendor/font-awesome.css"
+@import "ctrl_panel"
+
+// Font Awesome Bootstrap Compatibility Hacks
+[class^="fa-"], [class*=" fa-"]
+  background-image none
+  padding-right 0.1em
+  line-height inherit
+
+.btn [class^="fa-"], [class*=" fa-"]
+  line-height 1em
+
+
+// Layout
+
+html, body
+  height 100% // Not sure why but 100% was borking FF
+  margin 0px
+  padding 0px
+
+@css {
+  @-moz-document url-prefix() { 
+    body {
+      margin-top: -20px;
+    }
+  }
+}
+
+#main-container
+  display flex
+  flex-flow column
+  box-align center
+  width 100%
+  height 100%
+
+  > .container
+    width: 100%
+
+header
+  h1 .name
+    color #CCC
+
+.content
+  flex 1 1 auto
+
+footer
+  .span12
+    border-top 1px solid #CCC
+    padding-top 6px
+    padding-bottom 6px
+    line-height 31px // aligning the temperature text to the buttons
+
+    .temperature
+      display inline-block
+      margin-right 18px
+
+      .name, .value
+        display inline-block
+      .value
+        padding-left 6px
+        font-weight bold
+
+    .btn
+      margin-left 18px
+
+
+.modal
+  width 80%
+  left 10%
+  height 80%
+  top 10%
+  margin 0px
+
+.canvas-container
+  overflow hidden
+  canvas
+    position absolute
