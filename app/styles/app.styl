@@ -46,24 +46,25 @@ header
   flex 1 1 auto
 
 footer
-  .span12
+  margin-bottom: 4px
+
+  .h-rule
     border-top 1px solid #CCC
+    width: 100%
     padding-top 6px
-    padding-bottom 6px
-    line-height 31px // aligning the temperature text to the buttons
 
-    .temperature
+  .temperature
+    display inline-block
+    margin-right 18px
+
+    .name, .value
       display inline-block
-      margin-right 18px
+    .value
+      padding-left 6px
+      font-weight bold
 
-      .name, .value
-        display inline-block
-      .value
-        padding-left 6px
-        font-weight bold
-
-    .btn
-      margin-left 18px
+  .btn
+    margin-left 18px
 
 
 .modal
