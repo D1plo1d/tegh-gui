@@ -14,6 +14,7 @@
     "jquery": "1.10.2",
     "lodash": "2.2.1",
     "auto-reload-brunch": "*",
-    "bootstrap-stylus": "*"
+    "bootstrap-stylus": "*",
+    "bootstrap-switch": "*"
     }
 }

@@ -12,9 +12,11 @@
 
   .btn-left
     float left
+    margin-left: -2px
 
   .btn-right
     float right
+    margin-right 2px
 
   .btn-down:nth-child(2)
     margin-top 20px
@@ -57,6 +59,20 @@
     margin-right 0px
     margin-top -5px
 
+.side-panel .popover
+  width auto
+  .control-label
+    margin-bottom: 4px
+  .input-group
+    margin-bottom: 8px
+  .control-group:not(:first-child)
+    margin-top: 8px
+
+  .jog-panel:nth-child(1) .popover.right
+    margin-top 40px
+    .arrow
+      top 48px
+
 #manual_ctrl.active
   display flex
   flex-flow row
@@ -69,13 +85,6 @@
   .side-panel
     width 270px
 
-  .side-panel .popover
-    width auto
-
-  .jog-panel:nth-child(1) .popover.right
-    margin-top 40px
-    .arrow
-      top 48px
 
 // TODO: This needs to be moved or deleted
 .console-panel

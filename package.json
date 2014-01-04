@@ -8,9 +8,6 @@
     "type": "git",
     "url": "https://github.com/exlee/brunch-on-asteroids"
   },
-  "engines": {
-    "node": "~0.6.10 || 0.8 || 0.9"
-  },
   "scripts": {
     "start": "brunch watch --server",
     "build": "brunch build --optimize",
@@ -18,19 +15,17 @@
   },
   "dependencies": {
     "sugar": "*",
-    "jade-brunch": ">= 1.0 < 1.5",
-    "static-jade-brunch": ">= 1.0 < 1.5",
-    "javascript-brunch": ">= 1.0 < 1.5",
-    "LiveScript-brunch": ">= 1.0 < 1.5",
-    "coffee-script-brunch": "=> 1.0 < 1.5",
-    "coffeelint-brunch": ">= 1.0 < 1.5",
-    "auto-reload-brunch": "~1.4.0",
-    "css-brunch": ">= 1.0 < 1.5",
-    "sass-brunch": ">= 1.0 < 1.5",
-    "less-brunch": ">= 1.0 < 1.5",
-    "uglify-js-brunch": ">= 1.0 < 1.5",
-    "clean-css-brunch": ">= 1.0 < 1.5",
-    "stylus-brunch": "1.*"
+    "jade-brunch": "~1.7",
+    "static-jade-brunch": "~1.7",
+    "javascript-brunch": "~1.7",
+    "coffee-script-brunch": "~1.7",
+    "auto-reload-brunch": "~1.7",
+    "css-brunch": "~1.7",
+    "sass-brunch": "~1.7",
+    "less-brunch": "~1.7",
+    "uglify-js-brunch": "~1.7",
+    "clean-css-brunch": "~1.7",
+    "stylus-brunch": "~1.8"
   },
   "devDependencies": {}
 }

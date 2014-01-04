@@ -1,6 +1,9 @@
 $ ->
 
-  $(".toggle-btn").toggleButtons(width: 70)
+  $(".switch-small").bootstrapSwitch()
+  $('.temperature-panel .switch-small')
+  .bootstrapSwitch('setOnLabel', 'ON')
+  .bootstrapSwitch('setOffLabel', 'OFF')
 
   $panels =  $("#manual_ctrl").find(".temperature-panel, .jog-panel, .extruders-panel")
   initPopover $(el) for el in $panels
