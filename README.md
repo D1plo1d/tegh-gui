@@ -17,7 +17,7 @@ This does not always work. To make sure the page is reloaded as expected always 
 * Source files are located in the `app` directory.
 * Compiled files are located in `_public`. Do not edit these directly. They are generated from the `app` directory files.
 
-To start developing:
+### Running Brunch
 
 1. run `brunch watch` from the tegh browser plugin folder
 2. open **_public/index.html** in chrome. This page will automatically reload changes.
