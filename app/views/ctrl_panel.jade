@@ -1,9 +1,9 @@
 mixin title(title, icon)
   h4
-    a.pull-right(href='#')
-      i.fa.fa-chevron-right
     //- i.fa(class= icon)
     span.title= title
+    a(href='#')
+      i.fa.fa-plus-square-o
 
 mixin text_input(label, value, units)
   - if (label != null)
@@ -18,7 +18,7 @@ mixin jog_panel(axis, icon, directions)
     .directional-pad
       - each data, direction in directions
         .btn.btn-lg.btn-default(class='btn-#{direction}', data-direction=data[1], data-axis=data[0])
-          i.fa(class='fa-arrow-#{direction}')
+          i.fa(class='fa-chevron-#{direction}')
     .settings-popover.hide
       .form
         .control-group
@@ -41,7 +41,7 @@ mixin extruders_panel
               a Retract
         .subtitle.pull-right
         .title= extruder
-    
+
     .settings-popover.hide
       each extruder in ["PLA Extruder", "ABS Extruder"]
         .control-group
