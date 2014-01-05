@@ -13,7 +13,7 @@ mixin text_input(label, value, units)
     span.input-group-addon!= units
 
 mixin jog_panel(axis, icon, directions)
-  .jog-panel(data-axis= axis)
+  .jog-panel.sub-panel(data-axis= axis)
     mixin title(axis.toUpperCase()+" Jog", icon)
     .directional-pad
       - each data, direction in directions
@@ -27,7 +27,7 @@ mixin jog_panel(axis, icon, directions)
           mixin text_input("Movement Speed", 1, "mm/s")
 
 mixin extruders_panel
-  .extruders-panel
+  .extruders-panel.sub-panel
     mixin title("Extruders", "fa-tint")
     each extruder in ["PLA", "ABS"]
       .side-row
@@ -49,7 +49,7 @@ mixin extruders_panel
           mixin text_input(null, 0, "mm/s")
 
 mixin temperature_panel
-  .temperature-panel
+  .temperature-panel.sub-panel
     mixin title("Temperature Control", "fa-bar-chart-o")
     each extruder in ["PLA", "ABS", "Platform"]
       .side-row
