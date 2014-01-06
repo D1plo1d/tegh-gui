@@ -3,6 +3,9 @@
   margin-left auto
   margin-right auto
 
+  &:last-child
+    margin-top: 24px
+
   .btn-up, .btn-down
     margin-left 57px
     margin-right 57px
@@ -18,7 +21,23 @@
     float right
     margin-right 2px
 
-  .btn-down:nth-child(2)
+  .btn-left, .btn-right
+    margin-top: 4px
+    margin-bottom: 4px
+
+  .axis-name
+    display none
+    font-size 160%
+    font-weight 300
+    color #b4b4b4
+    position absolute
+    margin-top 40px
+    margin-left 15px
+
+  &:hover .axis-name
+    display block
+
+  .btn-down:nth-child(3)
     margin-top 20px
 
 .side-panel

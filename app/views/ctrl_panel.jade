@@ -12,14 +12,21 @@ mixin text_input(label, value, units, model)
     input.form-control(type='text', value=value, ng-model=model)
     span.input-group-addon!= units
 
-mixin jog_panel(title, icon, directions)
+mixin dpad(icon, directions)
+  .directional-pad
+    if !icon
+      .axis-name Z
+    - each data, direction in directions
+      - click = "move({"+data[0]+": "+data[1]+" * axes."+directions.up[0]+".distance})"
+      .btn.btn-lg.btn-default(class='btn-#{direction}', ng-click=click)
+        i.fa(class='fa-chevron-#{direction}')
+
+
+mixin move_panel
   .jog-panel.sub-panel
-    mixin title(title, icon)
-    .directional-pad
-      - each data, direction in directions
-        - click = "move({"+data[0]+": "+data[1]+" * axes."+directions.up[0]+".distance})"
-        .btn.btn-lg.btn-default(class='btn-#{direction}', ng-click=click)
-          i.fa(class='fa-chevron-#{direction}')
+    mixin title("Movement", icon)
+    mixin dpad(true, {up: ['y', -1], left: ['x', -1], right: ['x', +1], down: ['y', +1]})
+    mixin dpad(false, {up: ['z', -1], down: ['z', +1]})
     .settings-popover.hide
       //- Home Buttons
       .btn-group
@@ -28,16 +35,17 @@ mixin jog_panel(title, icon, directions)
           span.caret
           span.sr-only Toggle Dropdown
         ul.dropdown-menu(role="menu")
-          each axes, title in {'X': ['x'], 'Y': ['y'], 'X + Y': ['x','y'], 'Z': ['z']}
+          each axes, title in {'X': ['x'], 'Y': ['y'], 'Z': ['z'], 'X and Y': ['x','y']}
             li
               a(href="#", ng-click="home(#{JSON.stringify(axes)})") Home #{title}
-
       //- Distance + Speed Fields
       .form
-        .control-group
-          mixin text_input("Distance", 1, "mm", "axes."+directions.up[0]+".distance")
-        .control-group
-          mixin text_input("Movement Speed", 1, "mm/s", "axes."+directions.up[0]+".speed")
+        each axis, title in {'X and Y': 'axes.y', 'Z': 'axes.z'}
+          .control-label= title
+          .control-group
+            mixin text_input(null, 1, "mm", axis+".distance")
+          .control-group
+            mixin text_input(null, 1, "mm/s", axis+".speed")
 
 mixin extruders_panel
   .extruders-panel.sub-panel
@@ -62,7 +70,7 @@ mixin extruders_panel
 
 mixin temperature_panel
   .temperature-panel.sub-panel
-    mixin title("Temperature Control", "fa-bar-chart-o")
+    mixin title("Temperature", "fa-bar-chart-o")
 
     .side-row(ng-repeat="(k, comp) in heaters")
       .pull-right
@@ -76,8 +84,7 @@ mixin temperature_panel
         mixin text_input("{{comp.name}}", "0", "&deg;C", "comp.target_temp")
 
 .side-panel
-  mixin jog_panel("X / Y", "fa-arrows-alt", {up: ['y', -1], left: ['x', -1], right: ['x', +1], down: ['y', +1]})
-  mixin jog_panel("Z", "fa-arrows-v", {up: ['z', -1], down: ['z', +1]})
+  mixin move_panel
   mixin temperature_panel
   mixin extruders_panel
 .canvas-container

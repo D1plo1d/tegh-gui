@@ -10,6 +10,9 @@ $ ->
   $panels =  $("#manual_ctrl").find(".temperature-panel, .jog-panel, .extruders-panel")
   initPopover $(el) for el in $panels
 
+  # # Showing Axes names on button hover
+  # $(".directional-pad .btn").on "mouseenter mouseleave", ->
+  #   $(@).siblings(".axis-name").toggle()
 
   # Showing one side panel popover at a time
   $sidePanelLinks = $("#manual_ctrl .side-panel h4 a")
