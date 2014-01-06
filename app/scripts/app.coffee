@@ -1,5 +1,7 @@
 @teghApp = angular.module('teghApp', [])
 
+$sidePanelLinks = null
+
 $ ->
 
   $(".switch-small").bootstrapSwitch()
@@ -16,8 +18,12 @@ $ ->
 
   # Showing one side panel popover at a time
   $sidePanelLinks = $("#manual_ctrl .side-panel h4 a")
-  $sidePanelLinks.on "click", ->
-    $sidePanelLinks.not($(@)).popover("hide")
+  hide = (e) ->
+    $sidePanelLinks.not($(e.target).closest("a")).popover("hide")
+  $sidePanelLinks.on "show.bs.popover", -> setTimeout( ->
+    $("body").one "click", "*:not(.popover-content)", hide
+  , 0)
+
 
 initPopover = ($el) ->
   $popover = $el.find(".settings-popover").detach().removeClass("hide")
@@ -25,3 +31,4 @@ initPopover = ($el) ->
     title: "#{$el.find("h4 .title").text()} Settings"
     content: $popover
     html: true
+  return false
