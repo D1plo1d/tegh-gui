@@ -1,3 +1,5 @@
+@teghApp = angular.module('teghApp', [])
+
 $ ->
 
   $(".switch-small").bootstrapSwitch()
@@ -15,9 +17,7 @@ $ ->
     $sidePanelLinks.not($(@)).popover("hide")
 
 initPopover = ($el) ->
-  console.log "init"
   $popover = $el.find(".settings-popover").detach().removeClass("hide")
-  console.log $popover
   $popoverLink = $el.find('h4 a').popover
     title: "#{$el.find("h4 .title").text()} Settings"
     content: $popover
