@@ -20,5 +20,5 @@ This does not always work. To make sure the page is reloaded as expected always 
 ### Running Brunch
 
 1. run `bower install` to download any new client side libraries
-2. run `brunch watch` from the tegh browser plugin folder
+2. run `brunch watch --server` from the tegh browser plugin folder
 3. open **_public/index.html** in chrome. This page will automatically reload changes.
