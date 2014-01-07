@@ -4,7 +4,7 @@ block content
   .tab-content
 
 
-    #print_queue.tab-pane.active
+    #print_queue.tab-pane
       table.table.table-striped
         thead
           tr
@@ -27,7 +27,7 @@ block content
             td 1
 
 
-    #manual_ctrl.tab-pane
+    #manual_ctrl.tab-pane.active
       include ./ctrl_panel
 
     #settings.tab-pane
@@ -41,17 +41,17 @@ block content
           | Millimeters
       h3 Units
 
-mixin console
-  .console-panel.col-sm-6.pull-right
-    h3 Console
-    .console-history.well
-      .c Connecting....
-      .c Connected
-      .c G1 x90
-      .c G1 x190
-      .c G1 x90
-      .c G1 x190
-      .c G1 x90
-    .console-form
-      input(type='text')
-      .btn Submit
+//- mixin console
+//-   .console-panel.col-sm-6.pull-right
+//-     h3 Console
+//-     .console-history.well
+//-       .c Connecting....
+//-       .c Connected
+//-       .c G1 x90
+//-       .c G1 x190
+//-       .c G1 x90
+//-       .c G1 x190
+//-       .c G1 x90
+//-     .console-form
+//-       input(type='text')
+//-       .btn Submit

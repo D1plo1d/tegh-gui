@@ -48,40 +48,36 @@ mixin move_panel
             mixin text_input(null, 1, "mm/s", axis+".speed")
 
 mixin extruders_panel
+  - extruders = "(k, comp) in extruders()"
   .extruders-panel.sub-panel
     mixin title("Extruders", "fa-tint")
-    .side-row(ng-repeat="(k, comp) in extruders")
+    .side-row(ng-repeat = extruders)
       .btn-group.pull-right
-        .btn.btn-default {{extrudeText(comp.direction)}}
-        .btn.btn-default.dropdown-toggle(data-toggle="dropdown")
-          span.caret
-          span.sr-only Toggle Dropdown
-        ul.dropdown-menu(role="menu")
-          li
-            a(ng-click="comp.direction = -comp.direction")
-              | {{extrudeText(-1 * comp.direction)}}
+        .btn.btn-default Reverse
+        .btn.btn-default Extrude
       .subtitle.pull-right
-      .title {{comp.name}}
+      .title {{k|uppercase}}
 
     .settings-popover.hide
-      .control-group(ng-repeat="(k, comp) in extruders")
-        mixin text_input("{{comp.name}}", 0, "mm", "comp.distance")
+      .control-group(ng-repeat = extruders)
+        mixin text_input("{{k|uppercase}}", 0, "mm", "comp.distance")
         mixin text_input(null, 0, "mm/s", "comp.speed")
 
 mixin temperature_panel
+  - heaters = "(k, comp) in heaters()"
   .temperature-panel.sub-panel
     mixin title("Temperature", "fa-bar-chart-o")
 
-    .side-row(ng-repeat="(k, comp) in heaters")
+    .side-row(ng-repeat = heaters)
       .pull-right
-        input.switch-small(type="checkbox", ng-model="comp.enabled")
+        input.switch-small(type="checkbox", toggle-switch=true, data-on="ON", data-off="OFF", data-display="comp.target_temp > 0", ng-click="toggleHeater(comp)")
       .subtitle.pull-right
-        | {{comp.current_temp}} / {{comp.target_temp}}&degC
-      .title {{comp.name}}
+        | {{comp.current_temp | number:1}} / {{comp.target_temp}}&degC
+      .title {{k|uppercase}}
 
     .settings-popover.hide
-      .control-group(ng-repeat="(k, comp) in heaters")
-        mixin text_input("{{comp.name}}", "0", "&deg;C", "comp.target_temp")
+      .control-group(ng-repeat = heaters)
+        mixin text_input("{{k|uppercase}}", "0", "&deg;C", "comp.target_temp")
 
 .side-panel
   mixin move_panel

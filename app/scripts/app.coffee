@@ -4,25 +4,23 @@ $sidePanelLinks = null
 
 $ ->
 
-  $(".switch-small").bootstrapSwitch()
-  $('.temperature-panel .switch-small')
-  .bootstrapSwitch('setOnLabel', 'ON')
-  .bootstrapSwitch('setOffLabel', 'OFF')
-
+  # $(".switch-small").bootstrapSwitch()
+  # $('.temperature-panel .switch-small')
+  # .bootstrapSwitch('setOnLabel', 'ON')
+  # .bootstrapSwitch('setOffLabel', 'OFF')
+  # console.log $('.temperature-panel .switch-small').length
+  # console.log c.toString() for c in $('.temperature-panel').children()
   $panels =  $("#manual_ctrl").find(".temperature-panel, .jog-panel, .extruders-panel")
   initPopover $(el) for el in $panels
 
-  # # Showing Axes names on button hover
-  # $(".directional-pad .btn").on "mouseenter mouseleave", ->
-  #   $(@).siblings(".axis-name").toggle()
-
   # Showing one side panel popover at a time
   $sidePanelLinks = $("#manual_ctrl .side-panel h4 a")
-  hide = (e) ->
+  onClickOutside = (e) ->
+    return if $(e.target).closest(".popover").length > 0
     $sidePanelLinks.not($(e.target).closest("a")).popover("hide")
-  $sidePanelLinks.on "show.bs.popover", -> setTimeout( ->
-    $("body").one "click", "*:not(.popover-content)", hide
-  , 0)
+    $("body").off "click", onClickOutside
+  $sidePanelLinks.on "show.bs.popover", -> _.defer ->
+    $("body").on "click", onClickOutside
 
 
 initPopover = ($el) ->
