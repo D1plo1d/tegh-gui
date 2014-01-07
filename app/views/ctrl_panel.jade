@@ -5,11 +5,11 @@ mixin title(title, icon)
     a.more-btn(href='#')
       i.fa.fa-plus-square-o
 
-mixin text_input(label, value, units, model)
+mixin text_input(label, value, units, model, onChange)
   - if (label != null)
     .control-label= label
   .controls.input-group
-    input.form-control(type='text', value=value, ng-model=model)
+    input.form-control(type='number', value=value, ng-model="#{model}", ng-change="set(#{onChange})")
     span.input-group-addon!= units
 
 mixin dpad(icon, directions)
@@ -40,12 +40,13 @@ mixin move_panel
               a(href="#", ng-click="home(#{JSON.stringify(axes)})") Home #{title}
       //- Distance + Speed Fields
       .form
-        each axis, title in {'X and Y': 'axes.y', 'Z': 'axes.z'}
+        each axis, title in {'X and Y': 'xy', 'Z': 'z'}
           .control-label= title
           .control-group
-            mixin text_input(null, 1, "mm", axis+".distance")
+            mixin text_input(null, 1, "mm", "movement."+axis+"_distance", null)
           .control-group
-            mixin text_input(null, 1, "mm/s", axis+".speed")
+            - feedrate = axis+"_feedrate"
+            mixin text_input(null, 1, "mm/s", "p."+feedrate, "'"+feedrate+"'")
 
 mixin extruders_panel
   - extruders = "(k, comp) in extruders()"
@@ -60,8 +61,8 @@ mixin extruders_panel
 
     .settings-popover.hide
       .control-group(ng-repeat = extruders)
-        mixin text_input("{{k|uppercase}}", 0, "mm", "comp.distance")
-        mixin text_input(null, 0, "mm/s", "comp.speed")
+        mixin text_input("{{k|uppercase}}", 0, "mm", "comp.distance", "k, 'distance'")
+        mixin text_input(null, 0, "mm/s", "comp.speed", "k, 'speed'")
 
 mixin temperature_panel
   - heaters = "(k, comp) in heaters()"
@@ -77,7 +78,7 @@ mixin temperature_panel
 
     .settings-popover.hide
       .control-group(ng-repeat = heaters)
-        mixin text_input("{{k|uppercase}}", "0", "&deg;C", "comp.target_temp")
+        mixin text_input("{{k|uppercase}}", "0", "&deg;C", "comp.target_temp", "k, 'target_temp'")
 
 .side-panel
   mixin move_panel

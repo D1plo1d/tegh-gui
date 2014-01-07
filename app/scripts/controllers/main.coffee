@@ -6,6 +6,7 @@ teghApp.controller 'main', ($scope, $filter) ->
   url = "127.0.0.1:2540/printers/dev_null_printer"
 
   onPrinterEvent = (event) -> $scope.$apply ->
+    console.log event if event.type == "initialized"
     printer.processEvent(event)
 
   # Local Only Properties. These are not part of the tegh protocol spec. They 
@@ -28,9 +29,18 @@ teghApp.controller 'main', ($scope, $filter) ->
 
   $scope.p = printer.data
 
-  $scope.axes =
-    y: {speed: 40, distance: 10}
-    z: {speed: 5, distance: 5}
+  $scope.set = (target, attr) ->
+    return if target == null
+    # Creating a nested diff object with the right target, attr and value
+    (data = {})[target] = {}
+    if attr?
+      data[target][attr] = $scope.p[target][attr]
+    else
+      data[target] = $scope.p[target]
+    console.log data
+    printer.execAction "set", data
+
+  $scope.movement = xy_distance: 10, z_distance: 5
 
   $scope.heaters = ->
     _.pick printer.data, (data, key) -> data.type == "heater"
