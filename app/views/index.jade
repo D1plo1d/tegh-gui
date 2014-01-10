@@ -1,8 +1,17 @@
 extends layout
 block content
 
-  .tab-content
+  nav#teghNavMenu.navmenu.navmenu-default.navmenu-fixed-left.offcanvas(role= "navigation")
+    a.navmenu-brand(href= "#") Select a 3D Printer
+    ul.nav.navmenu-nav
+      li.active
+        a(href="#") Ultimaker 1
+      li
+        a(href="#") Ultimaker 2
+      li
+        a(href="#") BreakerBot
 
+  .tab-content
 
     #print_queue.tab-pane
       table.table.table-striped

@@ -12,6 +12,10 @@ html(ng-app="teghApp")
     link(rel='stylesheet', href='css/app.css')
 
   body(ng-controller="main")
+    a.showPrintersBtn(data-canvas= "body", data-target= "#teghNavMenu", data-toggle= "offcanvas", type= "button")
+      .btn.btn-default
+        i.fa.fa-bars
+
     #main-container
 
       //- Header
@@ -27,7 +31,8 @@ html(ng-app="teghApp")
                   li(class="#{i == 0 ? 'active' : ''}")
                     a(href= '##{tab}', data-toggle="pill", class="#{tab}_nav")= tab.titleize()
             //- Title
-            h1 Ctrl Panel 
+            h1
+              | Tegh
               span.name Ultimaker 2
 
       //- Body

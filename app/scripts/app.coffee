@@ -22,6 +22,12 @@ $ ->
   $sidePanelLinks.on "show.bs.popover", -> _.defer ->
     $("body").on "click", onClickOutside
 
+  onResize()
+  $(window).resize onResize
+
+onResize = ->
+  $(".showPrintersBtn").height $(window).height()
+  $(".showPrintersBtn .btn").css top: $(window).height()/2
 
 initPopover = ($el) ->
   $popover = $el.find(".settings-popover").detach().removeClass("hide")
