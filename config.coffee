@@ -10,7 +10,8 @@ exports.config =
   files:
     javascripts:
       joinTo:
-        'js/app.js': /^app/
+        'js/app.js': /^app\/scripts/
+        'js/chrome_background.js': /^app\/chrome_background/
         'js/vendor.js': /^(vendor|bower_components)/
         'test/javascripts/test.js': /^test(\/|\\)(?!vendor)/
         'test/javascripts/test-vendor.js': /^test(\/|\\)(?=vendor)/
