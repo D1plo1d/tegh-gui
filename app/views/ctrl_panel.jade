@@ -12,12 +12,12 @@ mixin text_input(label, value, units, model, onChange)
     input.form-control(type='number', value=value, ng-model="#{model}", ng-change="set(#{onChange})")
     span.input-group-addon!= units
 
-mixin dpad(icon, directions)
+mixin dpad(icon, distance, directions)
   .directional-pad
     if !icon
       .axis-name Z
     - each data, direction in directions
-      - click = "move({"+data[0]+": "+data[1]+" * axes."+directions.up[0]+".distance})"
+      - click = "move({"+data[0]+": "+data[1]+" * movement."+distance+"_distance})"
       .btn.btn-lg.btn-default(class='btn-#{direction}', ng-click=click)
         i.fa(class='fa-chevron-#{direction}')
 
@@ -25,8 +25,8 @@ mixin dpad(icon, directions)
 mixin move_panel
   .jog-panel.sub-panel
     mixin title("Movement", icon)
-    mixin dpad(true, {up: ['y', -1], left: ['x', -1], right: ['x', +1], down: ['y', +1]})
-    mixin dpad(false, {up: ['z', -1], down: ['z', +1]})
+    mixin dpad(true, "xy", {up: ['y', -1], left: ['x', -1], right: ['x', +1], down: ['y', +1]})
+    mixin dpad(false, "z", {up: ['z', -1], down: ['z', +1]})
     .settings-popover.hide
       //- Home Buttons
       .btn-group
