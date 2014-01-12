@@ -6,7 +6,7 @@ teghApp.controller 'main', ($scope, $filter) ->
   url = "127.0.0.1:2540/printers/dev_null_printer"
 
   onPrinterEvent = (event) -> $scope.$apply ->
-    console.log event if event.type == "initialized"
+    # console.log event if event.type == "initialized"
     printer.processEvent(event)
 
   # Local Only Properties. These are not part of the tegh protocol spec. They 

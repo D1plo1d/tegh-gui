@@ -2,7 +2,7 @@
   "name": "Tegh Chrome",
   "description": "Your 3D printer, now with the power of the web.",
   "version": "0.0.0.0",
-  "manifest_version": 2,
+  "manifest_version": 5,
   "app": {
     "background": {
         "scripts": ["js/chrome_background.js"]
@@ -16,9 +16,10 @@
   "icons": {
     "128": "icon_128.png"
   },
-  "permissions": [{
-    "socket": [
-      "udp-send-to::99"
-    ]
-  }]
+  "permissions": [
+    "experimental",
+    {
+      "socket": ["udp-send-to", "udp-bind", "udp-multicast-membership"]
+    }
+  ]
 }
