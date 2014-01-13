@@ -3,7 +3,20 @@
 # You can also restrict angularjs injection keywords in
 # configuration file and skip this.
 teghApp.controller 'main', ($scope, $filter) ->
-  url = "127.0.0.1:2540/printers/dev_null_printer"
+
+  # For debugging purposes
+  window.mainScope = $scope
+
+  $scope.changePrinter = (service) -> changePrinter($scope, service)
+
+printer = null
+
+changePrinter = ($scope, service) ->
+  console.log "changing printers"
+  console.log service
+  printer?.close()
+  $scope.service = service
+  url = "#{service.address}:2540/printers/#{service.name}"
 
   onPrinterEvent = (event) -> $scope.$apply ->
     # console.log event if event.type == "initialized"
@@ -11,15 +24,15 @@ teghApp.controller 'main', ($scope, $filter) ->
 
   # Local Only Properties. These are not part of the tegh protocol spec. They 
   # are simply for this particular UI so they are not sent to the server.
-  localOnly =
-    heaters:
-      enabled: (comp) -> comp.target_temp > 0
-      direction: -> 1
-      speed: -> 5
-      distance: -> 2
-    axes:
-      speed: -> 40
-      distance: -> 10
+  # localOnly =
+  #   heaters:
+  #     enabled: (comp) -> comp.target_temp > 0
+  #     direction: -> 1
+  #     speed: -> 5
+  #     distance: -> 2
+  #   axes:
+  #     speed: -> 40
+  #     distance: -> 10
 
   # e0: { current_temp: 178, target_temp: 185, enabled: true, direction: 1, distance: 3, speed: 5, name: "ABS" },
   # e1: { current_temp: 178, target_temp: 225, enabled: false, direction: -1, distance: 3, speed: 5, name: "PLA" },
@@ -44,6 +57,9 @@ teghApp.controller 'main', ($scope, $filter) ->
 
   $scope.heaters = ->
     _.pick printer.data, (data, key) -> data.type == "heater"
+
+  $scope.jobs = ->
+    _.pick printer.data, (data, key) -> key.match(/^jobs\[/)?
 
   $scope.extruders = ->
     _.pick $scope.heaters(), (data, key) -> key != "b"

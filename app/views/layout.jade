@@ -11,7 +11,13 @@ html(ng-app="teghApp", ng-csp="")
     //- CSS
     link(rel='stylesheet', href='css/app.css')
 
-  body(ng-controller="main")
+  body.canvas-slid(ng-controller="main")
+    nav#teghNavMenu.navmenu.navmenu-default.navmenu-fixed-left.offcanvas(role= "navigation")
+      a.navmenu-brand(href= "#") Select a 3D Printer
+      ul.nav.navmenu-nav(ng-controller="service_discovery")
+        li(ng-repeat="service in services", ng-class="{active: active == service}", ng-click="activate(service); changePrinter(service)" data-target= "#teghNavMenu", data-toggle= "offcanvas")
+          a(href="#"){{service.name}} ({{service.address}})
+
     a.showPrintersBtn(data-canvas= "body", data-target= "#teghNavMenu", data-toggle= "offcanvas", type= "button")
       .btn.btn-default
         i.fa.fa-bars

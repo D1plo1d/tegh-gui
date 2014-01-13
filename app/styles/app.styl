@@ -3,6 +3,8 @@
 @import "../../vendor/bootstrap-jasny-extend/css/jasny-bootstrap.css"
 @import "../../vendor/font-awesome.css"
 @import "ctrl_panel"
+@import "service_discovery"
+
 
 // Font Awesome Bootstrap Compatibility Hacks
 [class^="fa-"], [class*=" fa-"]
@@ -12,7 +14,6 @@
 
 .btn [class^="fa-"], [class*=" fa-"]
   line-height 1em
-
 
 // Layout
 
@@ -28,23 +29,6 @@ html, body
     }
   }
 }
-
-#teghNavMenu
-  border-right none
-
-.showPrintersBtn
-  position absolute
-  left 0
-  top 0
-  height 100%
-  border-right solid #e7e7e7 1px
-  background #f8f8f8
-  width 20px
-  z-index 1031
-  .btn
-    position absolute
-    left: -10px
-    margin-top -47px
 
 #main-container
   display flex

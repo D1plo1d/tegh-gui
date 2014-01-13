@@ -1,15 +1,6 @@
 extends layout
 block content
 
-  nav#teghNavMenu.navmenu.navmenu-default.navmenu-fixed-left.offcanvas(role= "navigation")
-    a.navmenu-brand(href= "#") Select a 3D Printer
-    ul.nav.navmenu-nav(ng-controller="service_discovery")
-      li(ng-repeat="service in services")
-        a(href="#"){{service.name}} ({{service.address}})
-
-      //- li.active
-      //-   a(href="#") Ultimaker 1
-
   .tab-content
 
     #print_queue.tab-pane

@@ -36,3 +36,5 @@ class TeghPrinter
   execAction: (action, data) =>
     @socket.send JSON.stringify action: action, data: data
 
+  close: =>
+    @socket.close()

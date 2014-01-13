@@ -1,0 +1,38 @@
+
+#teghNavMenu
+  border-right none
+
+.showPrintersBtn
+  position absolute
+  left 0
+  top 0
+  height 100%
+  border-right solid #e7e7e7 1px
+  background #f8f8f8
+  width 20px
+  z-index 1031
+  .btn
+    position absolute
+    left: -10px
+    margin-top -47px
+
+#teghNavMenu
+  display block
+  translate3d(-300px, 0, 0)
+
+.showPrintersBtn
+  translate3d(0px, 0, 0)
+
+#teghNavMenu, .showPrintersBtn, #main-container
+  transition -webkit-transform 0.300s
+
+.canvas-slid
+  #teghNavMenu
+    translate3d(0px, 0, 0)
+
+  .showPrintersBtn
+    translate3d(300px, 0, 0)
+
+  #main-container
+    translate3d(300px, 0, 0)
+

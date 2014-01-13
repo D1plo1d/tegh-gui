@@ -84,11 +84,14 @@ class @DnsSd
     return p
 
   _onResponse: (response, address) =>
+    # console.log response
     for answer in response.answers
+      continue unless answer.class == 1 and answer.type == 12
       service =
         address: address
-        name: answer.domainName.split(".")[0].replace /\s\(\d+\)/, ""
+        name: answer.domainName.split(".")[0].replace /\s\(\d+\)|^./, ""
         lastSeen: new Date()
+
       hash = "#{service.address}:#{service.name}"
       add = !(@services[hash]?)
       @services[hash] = service

@@ -17,6 +17,7 @@ exports.config =
         'test/javascripts/test-vendor.js': /^test(\/|\\)(?=vendor)/
       order:
         before: [
+          'vendor/auto-reload-bower-chrome.js'
           'app/scripts/init.coffee'
           'app/scripts/routes.coffee'
           'app/scripts/controllers/*'

@@ -143,17 +143,17 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
     css = this.translate + "(" + css + ")"
 
     // Use jQuery animation if CSS transitions aren't supported
-    if (!$.support.transition) {
-      return this.$canvas.animate({ borderSpacing: offset }, {
-        step: function(now, fx) {
-          $(this).css(prop, css.replace('{}', now))
-        },
-        complete: callback,
-        duration: 350
-      })
-    }
+    // if (!$.support.transition) {
+    //   return this.$canvas.animate({ borderSpacing: offset }, {
+    //     step: function(now, fx) {
+    //       $(this).css(prop, css.replace('{}', now))
+    //     },
+    //     complete: callback,
+    //     duration: 350
+    //   })
+    // }
 
-    this.$canvas.css(prop, css.replace('{}', offset))
+    // this.$canvas.css(prop, css.replace('{}', offset))
 
     this.$element
       .one($.support.transition.end, callback)
@@ -195,7 +195,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
       this.$element.css(this.options.placement, -1 * this.offset() + "px")
     this.$element.addClass('in')
 
-    this.$canvas.addClass('canvas-sliding')
+    this.$canvas.addClass('canvas-slid')
     if (this.$canvas != this.$element) $('body').css('overflow-x', 'hidden')
 
     this.transitioning = 1

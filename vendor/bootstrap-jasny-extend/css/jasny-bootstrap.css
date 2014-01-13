@@ -796,14 +796,14 @@ input[type="button"].btn-block {
     border-top-left-radius: 4px;
   }
 }
-
+/*
 .offcanvas {
   display: none;
 }
 
 .offcanvas.in {
   display: block;
-}
+}*/
 
 @media (max-width: 767px) {
   .offcanvas-xs {
@@ -839,11 +839,11 @@ input[type="button"].btn-block {
 .offcanvas-lg.in {
   display: block;
 }
-
+/*
 .canvas-sliding {
   -webkit-transition: -webkit-transform 0.35s;
           transition: transform 0.35s, -ms-transform 0.35s;
-}
+}*/
 
 .offcanvas-clone {
   position: absolute !important;
