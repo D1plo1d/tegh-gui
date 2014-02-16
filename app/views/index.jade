@@ -11,19 +11,10 @@ block content
             th
             th Qty
         tbody
-          tr
-            td Prusa Mendel Bottom Vertex
-            td
-            td 4
-          tr
-            td Prusa Mendel Top Vertex
-            td
-            td 2
-
-          tr
-            td Prusa Mendel Y Carriage
-            td
-            td 1
+          tr(ng-repeat="job in jobs()")
+            td {{job.name}} {{job}}
+            td {{job.quality}}
+            td {{job.qty}}
 
 
     #manual_ctrl.tab-pane.active

@@ -46,7 +46,7 @@ mixin move_panel
             mixin text_input(null, 1, "mm", "movement."+axis+"_distance", null)
           .control-group
             - feedrate = axis+"_feedrate"
-            mixin text_input(null, 1, "mm/s", "p."+feedrate, "'"+feedrate+"'")
+            mixin text_input(null, 1, "mm/s", "p.axes."+feedrate, "'axes', '"+feedrate+"'")
 
 mixin extruders_panel
   - extruders = "(k, comp) in extruders()"
@@ -54,15 +54,15 @@ mixin extruders_panel
     mixin title("Extruders", "fa-tint")
     .side-row(ng-repeat = extruders)
       .btn-group.pull-right
-        .btn.btn-default Reverse
-        .btn.btn-default Extrude
+        .btn.btn-default(ng-click="extrude(-1)") Reverse
+        .btn.btn-default(ng-click="extrude(+1)") Extrude
       .subtitle.pull-right
       .title {{k|uppercase}}
 
     .settings-popover.hide
       .control-group(ng-repeat = extruders)
         mixin text_input("{{k|uppercase}}", 0, "mm", "comp.distance", "k, 'distance'")
-        mixin text_input(null, 0, "mm/s", "comp.speed", "k, 'speed'")
+        mixin text_input(null, 0, "mm/s", "comp.flowrate", "k, 'flowrate'")
 
 mixin temperature_panel
   - heaters = "(k, comp) in heaters()"
@@ -71,9 +71,9 @@ mixin temperature_panel
 
     .side-row(ng-repeat = heaters)
       .pull-right
-        input.switch-small(type="checkbox", toggle-switch=true, data-on="ON", data-off="OFF", data-display="comp.target_temp > 0", ng-click="toggleHeater(comp)")
+        input.switch-small(type="checkbox", toggle-switch=true, data-on="ON", data-off="OFF", data-display="comp.enabled", ng-click="set(k, 'enabled')")
       .subtitle.pull-right
-        | {{comp.current_temp | number:1}} / {{comp.target_temp}}&degC
+        | {{comp.current_temp | number:1}} / {{comp.target_temp | number:1}}&degC
       .title {{k|uppercase}}
 
     .settings-popover.hide
@@ -85,10 +85,10 @@ mixin temperature_panel
   mixin temperature_panel
   mixin extruders_panel
 //- .canvas-container
-#camera-canvas-container(ng-if="hasCamera()")
-  canvas.camera#camera-canvas
-.no-camera(ng-if="!hasCamera()")
-  | No Camera Configured
+#camera-canvas-container
+  canvas.camera#camera-canvas(ng-if="hasCamera()")
+  .no-camera.big-not-found(ng-if="!hasCamera()")
+    | No Camera
 
 //- | <script id="shader-vs" type="x-shader/x-vertex">
 //- include ../shaders/shader.vs.glsl

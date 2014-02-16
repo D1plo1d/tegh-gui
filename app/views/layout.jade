@@ -17,6 +17,9 @@ html(ng-app="teghApp", ng-csp="")
       ul.nav.navmenu-nav(ng-controller="service_discovery")
         li(ng-repeat="service in services", ng-class="{active: active == service}", ng-click="activate(service); changePrinter(service)" data-target= "#teghNavMenu", data-toggle= "offcanvas")
           a(href="#"){{service.name}} ({{service.address}})
+        li(ng-if="!services.length")
+          .small-not-found No 3D Printers Found.
+
 
     a.showPrintersBtn(data-canvas= "body", data-target= "#teghNavMenu", data-toggle= "offcanvas", type= "button")
       .btn.btn-default
@@ -39,7 +42,7 @@ html(ng-app="teghApp", ng-csp="")
             //- Title
             h1
               | Tegh
-              span.name {{service.name}}
+              span.name  {{service.name}}
 
       //- Body
       .content.container
@@ -47,7 +50,7 @@ html(ng-app="teghApp", ng-csp="")
           .col-sm-12(ng-if="p")
             block content
           .big-not-found.no-printer-found(ng-if="!p")
-            | Step 1: Select a Printer
+            | Select a 3D Printer
 
       //- Footer
       footer.container

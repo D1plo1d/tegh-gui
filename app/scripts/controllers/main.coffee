@@ -35,17 +35,40 @@ b64toBlob = (b64Data, contentType, sliceSize) ->
   )
   blob
 
+initAllPopovers = ->
+  $panels =  $("#manual_ctrl").find(".temperature-panel, .jog-panel, .extruders-panel")
+  initPopover $(el) for el in $panels
+
+  # Showing one side panel popover at a time
+  $sidePanelLinks = $("#manual_ctrl .side-panel h4 a")
+  onClickOutside = (e) ->
+    return if $(e.target).closest(".popover").length > 0
+    $sidePanelLinks.not($(e.target).closest("a")).popover("hide")
+    $("body").off "click", onClickOutside
+  $sidePanelLinks.on "show.bs.popover", -> _.defer ->
+    $("body").on "click", onClickOutside
+
+
+initPopover = ($el) ->
+  $popover = $el.find(".settings-popover").detach().removeClass("hide")
+  $popoverLink = $el.find('h4 a').popover
+    title: "#{$el.find("h4 .title").text()} Settings"
+    content: $popover
+    html: true
+  return false
+
 changePrinter = ($scope, service) ->
   console.log "changing printers"
   console.log service
   printer?.close()
   $scope.service = service
   url = "#{service.address}:2540/printers/#{service.name}"
+  setTimeout initAllPopovers, 0
 
   onPrinterEvent = (event) -> $scope.$apply ->
     printer.processEvent(event)
     _initCamera() if printer.data.camera? and !ctx?
-    _onCameraChange() if event.target == "camera"
+    _onCameraChange() if event.target == "camera" or event.type == 'initialize'
 
   # Local Only Properties. These are not part of the tegh protocol spec. They
   # are simply for this particular UI so they are not sent to the server.
@@ -72,14 +95,27 @@ changePrinter = ($scope, service) ->
     return if target == null
     # Creating a nested diff object with the right target, attr and value
     (data = {})[target] = {}
-    if attr?
-      data[target][attr] = $scope.p[target][attr]
-    else
-      data[target] = $scope.p[target]
+    data[target][attr] = $scope.p[target][attr]
     console.log data
     printer.execAction "set", data
 
   $scope.movement = xy_distance: 10, z_distance: 5
+
+  $scope.move = (axis, direction) ->
+    data = {}
+    distanceKey = "#{if axis == 'z' then 'z' else 'xy'}_distance"
+    data[axis] = direction * $scope.movement[distanceKey]
+    printer.execAction "move", data
+
+  $scope.home = (axes) ->
+    printer.execAction "home", axes
+
+  # TODO!
+  $scope.extrude = (axis, direction) ->
+    data = {}
+    # distanceKey = "#{if axis == 'z' then 'z' else 'xy'}_distance"
+    # data[axis] = $scope.movement[distanceKey]
+    # printer.execAction "move", data
 
   $scope.heaters = ->
     _.pick printer.data, (data, key) -> data.type == "heater"
