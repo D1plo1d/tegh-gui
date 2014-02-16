@@ -84,8 +84,11 @@ mixin temperature_panel
   mixin move_panel
   mixin temperature_panel
   mixin extruders_panel
-.canvas-container
-- //TODO: fan, conveyor, home
+//- .canvas-container
+#camera-canvas-container(ng-if="hasCamera()")
+  canvas.camera#camera-canvas
+.no-camera(ng-if="!hasCamera()")
+  | No Camera Configured
 
 //- | <script id="shader-vs" type="x-shader/x-vertex">
 //- include ../shaders/shader.vs.glsl

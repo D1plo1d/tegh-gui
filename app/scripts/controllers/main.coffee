@@ -11,6 +11,30 @@ teghApp.controller 'main', ($scope, $filter) ->
 
 printer = null
 
+
+b64toBlob = (b64Data, contentType, sliceSize) ->
+  contentType = contentType or ""
+  sliceSize = sliceSize or 512
+  byteCharacters = atob(b64Data)
+  byteArrays = []
+  offset = 0
+
+  while offset < byteCharacters.length
+    slice = byteCharacters.slice(offset, offset + sliceSize)
+    byteNumbers = new Array(slice.length)
+    i = 0
+
+    while i < slice.length
+      byteNumbers[i] = slice.charCodeAt(i)
+      i++
+    byteArray = new Uint8Array(byteNumbers)
+    byteArrays.push byteArray
+    offset += sliceSize
+  blob = new Blob(byteArrays,
+    type: contentType
+  )
+  blob
+
 changePrinter = ($scope, service) ->
   console.log "changing printers"
   console.log service
@@ -19,10 +43,11 @@ changePrinter = ($scope, service) ->
   url = "#{service.address}:2540/printers/#{service.name}"
 
   onPrinterEvent = (event) -> $scope.$apply ->
-    # console.log event if event.type == "initialized"
     printer.processEvent(event)
+    _initCamera() if printer.data.camera? and !ctx?
+    _onCameraChange() if event.target == "camera"
 
-  # Local Only Properties. These are not part of the tegh protocol spec. They 
+  # Local Only Properties. These are not part of the tegh protocol spec. They
   # are simply for this particular UI so they are not sent to the server.
   # localOnly =
   #   heaters:
@@ -39,6 +64,7 @@ changePrinter = ($scope, service) ->
   # b: { current_temp: 178, target_temp: 195, enabled: false, name: "Platform" }
 
   printer = new TeghPrinter url, onPrinterEvent
+  Window.printer = printer
 
   $scope.p = printer.data
 
@@ -67,5 +93,39 @@ changePrinter = ($scope, service) ->
   $scope.extrudeText = (direction) ->
     if direction == 1 then "Extrude" else "Retract"
 
-  $scope[k] = _.curry(printer.execAction, 2)(k) for k in ['move', 'home']
+  $scope.hasCamera = ->
+    printer.data.camera?
+
+  ctx = undefined
+  previousUrl = undefined
+  _initCamera = ->
+    $canvas = $('#camera-canvas')
+    console.log $canvas
+    # Unsupported
+    return unless $canvas[0]?.getContext
+    ctx = $canvas[0].getContext('2d')
+    _resizeCamera()
+
+  $ -> $(window).on "resize", _resizeCamera
+
+  _resizeCamera = ->
+    return unless ctx?
+    console.log "Resize"
+    # $canvas.css 'width',''
+    camera = printer.data.camera
+    w = $('#camera-canvas').parent().width()
+    ctx.canvas.width = w
+    ctx.canvas.height = camera.height / camera.width * w
+
+  _onCameraChange = ->
+    return unless ctx?
+    img = new Image()
+    img.onload = ->
+      ctx.drawImage(img, 0, 0, ctx.canvas.width, ctx.canvas.height)
+      window.URL.revokeObjectURL previousUrl if previousUrl?
+      previousUrl = img.src
+    # console.log atob printer.data.camera.image
+    blob = b64toBlob printer.data.camera.image, "image/jpeg"
+    img.src = window.URL.createObjectURL blob
+    #"data:image/jpeg;base64,#{printer.data.camera.image}"
 

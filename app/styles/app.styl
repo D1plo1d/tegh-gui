@@ -23,7 +23,7 @@ html, body
   padding 0px
 
 @css {
-  @-moz-document url-prefix() { 
+  @-moz-document url-prefix() {
     body {
       margin-top: -20px;
     }
@@ -45,12 +45,16 @@ header
     color #CCC
 
 .content
+  margin-top: 15px
   flex 1 1 auto
 
 footer
-  margin-bottom: 4px
+  padding-bottom: 14px;
+  background: white;
+  z-index: 1000;
 
   .h-rule
+    margin-top: 2px
     border-top 1px solid #CCC
     width: 100%
     padding-top 6px
@@ -78,5 +82,17 @@ footer
 
 .canvas-container
   overflow hidden
-  canvas
-    position absolute
+
+.big-not-found
+  color #BBB
+  font-size: 300%
+  font-weight: bold
+  text-align: center
+
+.no-printer-found
+  position: absolute
+  top: 50%
+  left: 0px
+  width: 100%
+  margin-top: -30px
+  margin-left: -150px

@@ -5,7 +5,7 @@ class TeghPrinter
     @data = {}
 
     console.log @base_url
-    @socket = new WebSocket "ws://#{@base_url}/socket?user=admin&password=admin"
+    @socket = new WebSocket "wss://#{@base_url}/socket?user=admin&password=admin"
     @socket.onclose = @_onSocketClose
     @socket.onopen = @_onSocketOpen
     @socket.onmessage = @_onSocketMessage

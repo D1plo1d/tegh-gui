@@ -17,7 +17,10 @@
     "128": "icon_128.png"
   },
   "permissions": [
+    "http://*/*",
+    "https://*/*",
     "experimental",
+    "webview",
     {
       "socket": ["udp-send-to", "udp-bind", "udp-multicast-membership"]
     }

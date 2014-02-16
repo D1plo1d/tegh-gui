@@ -9,8 +9,8 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
 /* ========================================================================
  * Bootstrap: offcanvas.js v3.0.0-p7
  * http://jasny.github.io/bootstrap/javascript.html#offcanvas
- * 
- * Based on Boostrap collapse.js by Twitter, Inc. 
+ *
+ * Based on Boostrap collapse.js by Twitter, Inc.
  * ========================================================================
  * Copyright 2013 Jasny, BV.
  *
@@ -37,7 +37,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
     this.$canvas       = options.canvas ? $(options.canvas) : this.$element
     this.options       = $.extend({}, OffCanvas.DEFAULTS, options)
     this.transitioning = null
-    
+
     this.calcTransform()
 
     // If transform or transition aren't supported just slide the element
@@ -50,7 +50,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
       this.calcClone()
       $(window).on('resize.bs.offcanvas', $.proxy(this.recalc, this))
     }
-    
+
     if (this.options.autohide)
       $(document).on('click.bs.offcanvas', $.proxy(this.autohide, this))
 
@@ -108,17 +108,17 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
     var horizontal = $(window).width() / this.$element.width(),
         vertical = $(window).height() / this.$element.height(),
         $element = this.$element
-    
+
     function ab(a, b) {
       if ($element.css(b) === 'auto') return a
       if ($element.css(a) === 'auto') return b
-      
+
       var size_a = parseInt($element.css(a), 10),
           size_b = parseInt($element.css(b), 10)
-  
+
       return size_a > size_b ? b : a
     }
-    
+
     return horizontal > vertical ? ab('left', 'right') : ab('top', 'bottom')
   }
 
@@ -190,12 +190,13 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
       this.transitioning = 0
       this.$element.trigger('shown.bs.offcanvas')
     }
-    
+
     if (!this.$element.is(':visible') || !this.transform)
       this.$element.css(this.options.placement, -1 * this.offset() + "px")
     this.$element.addClass('in')
 
     this.$canvas.addClass('canvas-slid')
+    $("body").addClass('canvas-slid')
     if (this.$canvas != this.$element) $('body').css('overflow-x', 'hidden')
 
     this.transitioning = 1
@@ -223,13 +224,14 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
         .css('transform', '')
 
       $('body').css('overflow-x', '')
-      
+
       this.$element.trigger('hidden.bs.offcanvas')
     }
 
     if (fast) return complete.call(this)
 
     this.$canvas.removeClass('canvas-slid').addClass('canvas-sliding')
+    $("body").removeClass('canvas-slid')
 
     this.transitioning = 1
 
@@ -251,7 +253,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
   OffCanvas.prototype.recalc = function () {
     if (this.$calcClone.css('display') !== 'none') this.hide(true)
   }
-  
+
   OffCanvas.prototype.autohide = function (e) {
     if ($(e.target).closest(this.$element).length === 0) this.hide()
   }
@@ -328,7 +330,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
   var Rowlink = function (element, options) {
     this.$element = $(element)
     this.options = $.extend({}, Rowlink.DEFAULTS, options)
-    
+
     this.$element.on('click.bs.rowlink', 'td:not(.rowlink-skip)', $.proxy(this.click, this))
   }
 
@@ -339,19 +341,19 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
   Rowlink.prototype.click = function(e) {
     var target = $(e.currentTarget).closest('tr').find(this.options.target)[0]
     if ($(e.target)[0] === target) return
-    
+
     e.preventDefault();
-    
+
     if (target.click) {
       target.click()
     } else if(document.createEvent) {
-      var evt = document.createEvent("MouseEvents"); 
-      evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null); 
+      var evt = document.createEvent("MouseEvents");
+      evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
       target.dispatchEvent(evt);
     }
   }
 
-  
+
   // ROWLINK PLUGIN DEFINITION
   // ===========================
 
@@ -384,7 +386,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
     $this.rowlink($this.data())
     $(e.target).trigger('click.bs.rowlink')
   })
-  
+
 }(window.jQuery);
 
 /* ===========================================================
@@ -418,14 +420,14 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
 
   var Inputmask = function (element, options) {
     if (isAndroid) return // No support because caret positioning doesn't work on Android
-    
+
     this.$element = $(element)
     this.options = $.extend({}, Inputmask.DEFAULS, options)
     this.mask = String(this.options.mask)
-    
+
     this.init()
     this.listen()
-        
+
     this.checkVal() //Perform initial check for existing values
   }
 
@@ -444,7 +446,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
     var defs = this.options.definitions
     var len = this.mask.length
 
-    this.tests = [] 
+    this.tests = []
     this.partialPosition = this.mask.length
     this.firstNonMaskPos = null
 
@@ -473,7 +475,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
       }).join('')
     }, this))
   }
-    
+
   Inputmask.prototype.listen = function() {
     if (this.$element.attr("readonly")) return
 
@@ -517,19 +519,19 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
         end = begin + range.text.length
       }
       return {
-        begin: begin, 
+        begin: begin,
         end: end
       }
     }
   }
-  
+
   Inputmask.prototype.seekNext = function(pos) {
     var len = this.mask.length
     while (++pos <= len && !this.tests[pos]);
 
     return pos
   }
-  
+
   Inputmask.prototype.seekPrev = function(pos) {
     while (--pos >= 0 && !this.tests[pos]);
 
@@ -579,7 +581,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
 
   Inputmask.prototype.focusEvent = function() {
     this.focusText = this.$element.val()
-    var len = this.mask.length 
+    var len = this.mask.length
     var pos = this.checkVal()
     this.writeBuffer()
 
@@ -709,17 +711,17 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
     return (this.partialPosition ? i : this.firstNonMaskPos)
   }
 
-  
+
   // INPUTMASK PLUGIN DEFINITION
   // ===========================
 
   var old = $.fn.inputmask
-  
+
   $.fn.inputmask = function (options) {
     return this.each(function () {
       var $this = $(this)
       var data = $this.data('inputmask')
-      
+
       if (!data) $this.data('inputmask', (data = new Inputmask(this, options)))
     })
   }
@@ -775,7 +777,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
 
   var Fileupload = function (element, options) {
     this.$element = $(element)
-      
+
     this.$input = this.$element.find(':file')
     if (this.$input.length === 0) return
 
@@ -796,14 +798,14 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
       preview: this.$preview.html(),
       hiddenVal: this.$hidden.val()
     }
-    
+
     this.listen()
   }
-  
+
   Fileupload.prototype.listen = function() {
     this.$input.on('change.bs.fileinput', $.proxy(this.change, this))
     $(this.$input[0].form).on('reset.bs.fileinput', $.proxy(this.reset, this))
-    
+
     this.$element.find('[data-trigger="fileinput"]').on('click.bs.fileinput', $.proxy(this.trigger, this))
     this.$element.find('[data-dismiss="fileinput"]').on('click.bs.fileinput', $.proxy(this.clear, this))
   },
@@ -826,12 +828,12 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
       reader.onload = function(re) {
         var $img = $('<img>').attr('src', re.target.result)
         e.target.files[0].result = re.target.result
-        
+
         element.find('.fileinput-filename').text(file.name)
-        
+
         // if parent has max-height, using `(max-)height: 100%` on child doesn't take padding and border into account
         if (preview.css('max-height') != 'none') $img.css('max-height', parseInt(preview.css('max-height'), 10) - parseInt(preview.css('padding-top'), 10) - parseInt(preview.css('padding-bottom'), 10)  - parseInt(preview.css('border-top'), 10) - parseInt(preview.css('border-bottom'), 10))
-        
+
         preview.html($img)
         element.addClass('fileinput-exists').removeClass('fileinput-new')
 
@@ -842,22 +844,22 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
     } else {
       this.$element.find('.fileinput-filename').text(file.name)
       this.$preview.text(file.name)
-      
+
       this.$element.addClass('fileinput-exists').removeClass('fileinput-new')
-      
+
       this.$element.trigger('change.bs.fileinput')
     }
   },
 
   Fileupload.prototype.clear = function(e) {
     if (e) e.preventDefault()
-    
+
     this.$hidden.val('')
     this.$hidden.attr('name', this.name)
     this.$input.attr('name', '')
 
     //ie8+ doesn't support changing the value of input with type=file so clone instead
-    if (isIE) { 
+    if (isIE) {
       var inputClone = this.$input.clone(true);
       this.$input.after(inputClone);
       this.$input.remove();
@@ -869,7 +871,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
     this.$preview.html('')
     this.$element.find('.fileinput-filename').text('')
     this.$element.addClass('fileinput-new').removeClass('fileinput-exists')
-    
+
     if (e !== false) {
       this.$input.trigger('change')
       this.$element.trigger('clear.bs.fileinput')
@@ -885,7 +887,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
 
     if (this.original.exists) this.$element.addClass('fileinput-exists').removeClass('fileinput-new')
      else this.$element.addClass('fileinput-new').removeClass('fileinput-exists')
-    
+
     this.$element.trigger('reset.bs.fileinput')
   },
 
@@ -894,7 +896,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
     e.preventDefault()
   }
 
-  
+
   // FILEUPLOAD PLUGIN DEFINITION
   // ===========================
 
@@ -917,7 +919,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
     var $this = $(this)
     if ($this.data('fileinput')) return
     $this.fileinput($this.data())
-      
+
     var $target = $(e.target).closest('[data-dismiss="fileinput"],[data-trigger="fileinput"]');
     if ($target.length > 0) {
       e.preventDefault()

@@ -12,7 +12,7 @@ html(ng-app="teghApp", ng-csp="")
     link(rel='stylesheet', href='css/app.css')
 
   body.canvas-slid(ng-controller="main")
-    nav#teghNavMenu.navmenu.navmenu-default.navmenu-fixed-left.offcanvas(role= "navigation")
+    nav#teghNavMenu.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.canvas-slid.in(role= "navigation")
       a.navmenu-brand(href= "#") Select a 3D Printer
       ul.nav.navmenu-nav(ng-controller="service_discovery")
         li(ng-repeat="service in services", ng-class="{active: active == service}", ng-click="activate(service); changePrinter(service)" data-target= "#teghNavMenu", data-toggle= "offcanvas")
@@ -39,13 +39,15 @@ html(ng-app="teghApp", ng-csp="")
             //- Title
             h1
               | Tegh
-              span.name Ultimaker 2
+              span.name {{service.name}}
 
       //- Body
       .content.container
         .row
-          .col-sm-12
+          .col-sm-12(ng-if="p")
             block content
+          .big-not-found.no-printer-found(ng-if="!p")
+            | Step 1: Select a Printer
 
       //- Footer
       footer.container
@@ -71,6 +73,6 @@ html(ng-app="teghApp", ng-csp="")
             //-     .name Build Platform:
             //-     .value 98&deg;C
 
-      
+
     script(src='js/vendor.js')
     script(src='js/app.js')
