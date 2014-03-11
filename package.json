@@ -13,9 +13,9 @@
   "window": {
     "title": "node-webkit demo",
     "toolbar": false,
-    "frame": false,
-    "width": 800,
-    "height": 500,
+    "frame": true,
+    "width": 1280,
+    "height": 700,
     "position": "center",
     "min_width": 400,
     "min_height": 200,
@@ -28,6 +28,7 @@
     "nodewebkit": "*",
     "tegh-client-node": "git+https://github.com/tegh/tegh-client-node.git",
     "gaze": "*",
+    "lodash": "*",
 
     "sugar": "*",
 
@@ -35,7 +36,6 @@
     "static-jade-brunch": "~1.7",
     "javascript-brunch": "~1.7",
     "coffee-script-brunch": "~1.7",
-    "auto-reload-brunch": "~1.7",
     "css-brunch": "~1.7",
     "sass-brunch": "~1.7",
     "less-brunch": "~1.7",

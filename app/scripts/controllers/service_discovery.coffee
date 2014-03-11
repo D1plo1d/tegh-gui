@@ -1,8 +1,12 @@
 teghApp.controller 'service_discovery', ($scope, $filter) ->
   update = -> $scope.$apply ->
-    newServices = []
-    newServices.push v for k, v of dnsSd.services
-    $scope.services = newServices.sort (a, b) -> a.name > b.name
+    $scope.services = dnsSd.services.sort (a, b) -> a.name > b.name
+
+  dnsSd = tegh.discovery
+  .stop()
+  .on("serviceUp", update)
+  .on("serviceDown", update)
+  .start()
 
   # dnsSd = new DnsSd protocol: "_tegh._tcp.local", add: update, rm: update
   # dnsSd = new DnsSd protocol: "_construct._tcp.local", add: update, rm: update

@@ -62,7 +62,6 @@ changePrinter = ($scope, service) ->
   console.log service
   printer?.close()
   $scope.service = service
-  url = "#{service.address}:2540/printers/#{service.name}"
   setTimeout initAllPopovers, 0
 
   onPrinterEvent = (event) -> $scope.$apply ->
@@ -86,7 +85,8 @@ changePrinter = ($scope, service) ->
   # e1: { current_temp: 178, target_temp: 225, enabled: false, direction: -1, distance: 3, speed: 5, name: "PLA" },
   # b: { current_temp: 178, target_temp: 195, enabled: false, name: "Platform" }
 
-  printer = new TeghPrinter url, onPrinterEvent
+  service.processEvent = onPrinterEvent
+  printer = new tegh.Client(service)
   Window.printer = printer
 
   $scope.p = printer.data
@@ -136,7 +136,6 @@ changePrinter = ($scope, service) ->
   previousUrl = undefined
   _initCamera = ->
     $canvas = $('#camera-canvas')
-    console.log $canvas
     # Unsupported
     return unless $canvas[0]?.getContext
     ctx = $canvas[0].getContext('2d')
