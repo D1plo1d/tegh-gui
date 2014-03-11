@@ -1,3 +1,17 @@
+console.log "start"
+@tegh = require("tegh-client-node")
+path = require("path")
+fs = require("fs")
+
+# Live reloading
+gui = require('nw.gui')
+win = gui.Window.get()
+Gaze = require("gaze")
+new Gaze "_public/js/app.js", (err, gaze) ->
+  gaze.on 'all', (event, filepath) -> win.reload()
+
+# console.log __dirname
+# tegh = require "../node_modules/tegh-client-node/lib/index.coffee"
 @teghApp = angular.module('teghApp', [])
 
 $sidePanelLinks = null

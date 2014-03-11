@@ -1,20 +1,36 @@
 {
-  "author": "Przemysław Kamiński",
-  "name": "brunch-on-asteroids",
-  "description": "Brunch with AngularJS, Twitter Bootstrap + Bootswatch, SASS and CoffeeScript/LiveScript enabled and optional modules",
-  "version": "0.0.1",
-  "homepage": "https://github.com/exlee/brunch-on-asteroids",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/exlee/brunch-on-asteroids"
-  },
+  "author": "Rob Gilson",
+  "main": "_public/index.html",
+  "name": "tegh-gui",
+  "node-main": "index.js",
+  "description": "A GUI for Tegh",
+  "version": "0.0.0",
   "scripts": {
     "start": "brunch watch --server",
     "build": "brunch build --optimize",
     "test": "brunch test"
   },
+  "window": {
+    "title": "node-webkit demo",
+    "toolbar": false,
+    "frame": false,
+    "width": 800,
+    "height": 500,
+    "position": "center",
+    "min_width": 400,
+    "min_height": 200,
+    "max_width": 800,
+    "max_height": 600
+  },
+
   "dependencies": {
+    "coffee-script": "*",
+    "nodewebkit": "*",
+    "tegh-client-node": "git+https://github.com/tegh/tegh-client-node.git",
+    "gaze": "*",
+
     "sugar": "*",
+
     "jade-brunch": "~1.7",
     "static-jade-brunch": "~1.7",
     "javascript-brunch": "~1.7",
