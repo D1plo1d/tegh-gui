@@ -54,13 +54,14 @@ mixin extruders_panel
     mixin title("Extruders", "fa-tint")
     .side-row(ng-repeat = extruders)
       .btn-group.pull-right
-        .btn.btn-default(ng-click="extrude(-1)") Reverse
-        .btn.btn-default(ng-click="extrude(+1)") Extrude
+        .btn.btn-default(ng-click="extrude(k, -1)") Reverse
+        .btn.btn-default(ng-click="extrude(k, +1)") Extrude
       .subtitle.pull-right
       .title {{k|uppercase}}
 
     .settings-popover.hide
       .control-group(ng-repeat = extruders)
+        span(ng-init="comp.distance=defaultExtrudeDistance")
         mixin text_input("{{k|uppercase}}", 0, "mm", "comp.distance", "k, 'distance'")
         mixin text_input(null, 0, "mm/s", "comp.flowrate", "k, 'flowrate'")
 

@@ -89,7 +89,11 @@ changePrinter = ($scope, service) ->
   printer = new tegh.Client(service)
   Window.printer = printer
 
+  printer.on "error", (e) ->
+    console.log e
+
   $scope.p = printer.data
+  $scope.defaultExtrudeDistance = 5
 
   $scope.set = (target, attr) ->
     return if target == null
@@ -97,25 +101,27 @@ changePrinter = ($scope, service) ->
     (data = {})[target] = {}
     data[target][attr] = $scope.p[target][attr]
     console.log data
-    printer.execAction "set", data
+    printer.send "set", data
 
   $scope.movement = xy_distance: 10, z_distance: 5
 
-  $scope.move = (axis, direction) ->
-    data = {}
-    distanceKey = "#{if axis == 'z' then 'z' else 'xy'}_distance"
-    data[axis] = direction * $scope.movement[distanceKey]
-    printer.execAction "move", data
+  $scope.move = (data) ->
+    for axis, direction of data
+      distanceKey = "#{if axis == 'z' then 'z' else 'xy'}_distance"
+      data[axis] = direction * $scope.movement[distanceKey]
+    console.log data
+    printer.send "move", data
 
   $scope.home = (axes) ->
-    printer.execAction "home", axes
+    printer.send "home", axes
 
-  # TODO!
   $scope.extrude = (axis, direction) ->
+    console.log printer.data
+    console.log arguments
     data = {}
-    # distanceKey = "#{if axis == 'z' then 'z' else 'xy'}_distance"
-    # data[axis] = $scope.movement[distanceKey]
-    # printer.execAction "move", data
+    data[axis] = printer.data[axis].distance || $scope.defaultExtrudeDistance
+    console.log data
+    printer.send "move", data
 
   $scope.heaters = ->
     _.pick printer.data, (data, key) -> data.type == "heater"
