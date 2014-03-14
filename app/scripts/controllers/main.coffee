@@ -140,8 +140,9 @@ changePrinter = ($scope, service) ->
   $scope.heaters = ->
     _.pick printer.data, (data, key) -> data.type == "heater"
 
-  $scope.jobs = ->
-    _.pick printer.data, (data, key) -> key.match(/^jobs\[/)?
+  $scope.parts = ->
+    parts = _.pick printer.data, (data, key) -> data.type == "part"
+    _.sortBy parts, "position"
 
   $scope.extruders = ->
     _.pick $scope.heaters(), (data, key) -> key != "b"

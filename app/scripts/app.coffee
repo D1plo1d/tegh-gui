@@ -30,9 +30,8 @@ $ ->
     path: "/printers/printer_dev_null/"
   $(".showPrintersBtn").click()
 
-# console.log __dirname
-# tegh = require "../node_modules/tegh-client-node/lib/index.coffee"
-@teghApp = angular.module('teghApp', [])
+# Initializing the angular app
+@teghApp = angular.module('teghApp', ['inflectionFilters'])
 
 $sidePanelLinks = null
 

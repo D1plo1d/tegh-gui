@@ -3,6 +3,7 @@
 @import "../../vendor/bootstrap-jasny-extend/css/jasny-bootstrap.css"
 @import "../../vendor/font-awesome.css"
 @import "ctrl_panel"
+@import "print_queue"
 @import "service_discovery"
 
 
@@ -44,6 +45,7 @@ body
     width: 100%
 
 header
+  flex 0 0 auto
   h1 .name
     color #CCC
 
@@ -57,14 +59,21 @@ header
 .content
   margin-top: 15px
   flex 1 1 auto
+  display flex
+  flex-flow column
+  > .row, > .row > div, .tab-content
+    display flex
+    flex-flow column
+
 
 footer
+  flex 0 0 auto
   padding-bottom: 14px;
   background: white;
   z-index: 1000;
 
   .h-rule
-    margin-top: 2px
+    // margin-top: 2px
     border-top 1px solid #CCC
     width: 100%
     padding-top 6px

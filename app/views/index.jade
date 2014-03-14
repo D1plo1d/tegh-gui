@@ -3,21 +3,27 @@ block content
 
   .tab-content
 
-    #print_queue.tab-pane
-      table.table.table-striped
-        thead
-          tr
-            th
-            th
-            th Qty
-        tbody
-          tr(ng-repeat="job in jobs()")
-            td {{job.name}} {{job}}
-            td {{job.quality}}
-            td {{job.qty}}
+    #print_queue.tab-pane.active
+        .headers-table
+          table.table.table-striped
+            thead
+              tr
+                th File
+                th Status
+                th Quality
+                th Qty
+        .data-table
+          table.table.table-striped
+            tbody
+              tr(ng-repeat="part in parts()")
+                td {{part.file_name}}
+                td {{part.status | capitalize}}
+                td(ng-if="part.quality") {{part.quality | capitalize}}
+                td(ng-if="!part.quality") N/A
+                td {{part.qty_printed}} / {{part.qty}}
 
 
-    #manual_ctrl.tab-pane.active
+    #manual_ctrl.tab-pane
       include ./ctrl_panel
 
     //- #settings.tab-pane

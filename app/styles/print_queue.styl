@@ -1,0 +1,21 @@
+#print_queue.active
+  display flex
+  flex-flow column
+
+  td, th
+    width: (60/4)%
+    &:first-child
+      width: 40%
+
+  table
+    margin-bottom: 0px
+
+  .headers-table
+    flex 0 0 auto
+
+  .data-table
+    flex 1 1 auto
+    overflow-y scroll
+
+    tr:first-child td
+      border-top: 0px

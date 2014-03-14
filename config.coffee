@@ -22,6 +22,7 @@ exports.config =
           'app/scripts/controllers/*'
           'app/scripts/directives/*'
           'app/scripts/factories/*'
+          'app/scripts/filters/*'
         ]
         after: []
 
