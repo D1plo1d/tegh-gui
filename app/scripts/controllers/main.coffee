@@ -92,6 +92,12 @@ changePrinter = ($scope, service) ->
   printer.on "error", (e) ->
     console.log e
 
+  printer.on "close", (e) ->
+    console.log "closed"
+    $scope.$apply ->
+      $scope.p = null
+    jQuery("nav").offcanvas("show")
+
   $scope.p = printer.data
   $scope.defaultExtrudeDistance = 5
 
