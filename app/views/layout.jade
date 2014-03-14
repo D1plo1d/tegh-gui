@@ -41,8 +41,9 @@ html(ng-app="teghApp", ng-csp="")
                     a(href= '##{tab}', data-toggle="pill", class="#{tab}_nav")= tab.titleize()
             //- Title
             h1
-              | Tegh
-              span.name  {{service.name}}
+              span.name(ng-if="p") {{service.name}}
+              span.status(ng-if="p", class="printer-status-{{(p.state).status}}")
+                | {{(p.state).status}}
 
       //- Body
       .content.container
@@ -59,11 +60,12 @@ html(ng-app="teghApp", ng-csp="")
             .h-rule
 
             .pull-right
-              .btn.btn-danger E STOP
-              if false
-                a.btn-new-print-job.btn.btn-default(href="#")
-                  i.fa.fa-plus
-                  | Print Job
+              .btn.btn-danger(ng-click="estop()") E STOP
+              .btn.btn-default.btn-add-print(ng-click="add_job()")
+                | Add Print
+              form.add-print-form.hide
+                input(type="text", ng-model="session")
+                input.add-print-input(type="file", multiple=true, accept=".zip,.gcode,.ngc,.stl,.obj")
 
             //- if false
             //-   .temperature

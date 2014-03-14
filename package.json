@@ -14,14 +14,13 @@
     "title": "node-webkit demo",
     "toolbar": false,
     "frame": true,
+    "position": "center",
     "width": 1280,
     "height": 700,
-    "position": "center",
-    "min_width": 400,
-    "min_height": 200,
-    "max_width": 800,
-    "max_height": 600
+    "min_width": 1280,
+    "min_height": 700
   },
+  "chromium-args": "--disable-web-security --auto-ssl-client-auth",
 
   "dependencies": {
     "coffee-script": "*",

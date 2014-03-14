@@ -123,6 +123,20 @@ changePrinter = ($scope, service) ->
     console.log data
     printer.send "move", data
 
+  addJob = ->
+    jQuery(".add-print-input").val("").click().one "change", onJobSelected
+
+  onJobSelected =  ->
+    try
+      files = jQuery(".add-print-input")[0].files
+      printer.send "add_job", file.path for file in files
+    catch e
+
+  jQuery("body").on "click", ".btn-add-print", addJob
+
+  $scope.estop = ->
+    printer.send "estop"
+
   $scope.heaters = ->
     _.pick printer.data, (data, key) -> data.type == "heater"
 
