@@ -10,6 +10,7 @@ teghApp.controller 'main', ($scope, $filter) ->
   $scope.changePrinter = (service) -> changePrinter($scope, service)
 
 printer = null
+changingPrinters = false
 
 
 b64toBlob = (b64Data, contentType, sliceSize) ->
@@ -60,7 +61,10 @@ initPopover = ($el) ->
 changePrinter = ($scope, service) ->
   console.log "changing printers"
   console.log service
+  console.log printer
+  changingPrinters = true
   printer?.close()
+  changingPrinters = false
   $scope.service = service
   setTimeout initAllPopovers, 0
 
@@ -93,10 +97,14 @@ changePrinter = ($scope, service) ->
     console.log e
 
   printer.on "close", (e) ->
-    console.log "closed"
-    $scope.$apply ->
+    # console.log "closed"
+    phase = $scope.$root.$$phase;
+    if phase == '$apply' or phase == '$digest'
       $scope.p = null
-    jQuery("nav").offcanvas("show")
+    else
+      $scope.$apply -> $scope.p = null
+    jQuery("nav").offcanvas("show") if changingPrinters == false
+    jQuery("body").off "click", ".btn-add-print"
 
   $scope.p = printer.data
   $scope.defaultExtrudeDistance = 5
@@ -130,7 +138,11 @@ changePrinter = ($scope, service) ->
     printer.send "move", data
 
   addJob = ->
-    jQuery(".add-print-input").val("").click().one "change", onJobSelected
+    jQuery(".add-print-input")
+    .off("change")
+    .val("")
+    .click()
+    .one "change", onJobSelected
 
   onJobSelected =  ->
     try

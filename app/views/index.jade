@@ -13,14 +13,19 @@ block content
                 th Quality
                 th Qty
         .data-table
-          table.table.table-striped
+          table.table.table-striped(ng-if="(parts()).length")
             tbody
               tr(ng-repeat="part in parts()")
-                td {{part.file_name}}
+                td
+                  .fa.fa-bars.drag-handle
+                  | {{part.file_name}}
                 td {{part.status | capitalize}}
                 td(ng-if="part.quality") {{part.quality | capitalize}}
                 td(ng-if="!part.quality") N/A
                 td {{part.qty_printed}} / {{part.qty}}
+          .big-not-found.centered(ng-if="!(parts()).length")
+            | The Print Queue is Empty
+
 
 
     #manual_ctrl.tab-pane

@@ -22,13 +22,13 @@ new Gaze ["_public/index.html"], (err, gaze) ->
     setTimeout ( -> win.reload() ), 400
 
 # Dev: Autoload dev_null printer on localhost
-$ ->
-  mainScope.changePrinter
-    address: "192.168.1.102"
-    hostname: null
-    name: "printer_dev_null"
-    path: "/printers/printer_dev_null/"
-  $(".showPrintersBtn").click()
+# $ ->
+#   mainScope.changePrinter
+#     address: "192.168.1.102"
+#     hostname: null
+#     name: "printer_dev_null"
+#     path: "/printers/printer_dev_null/"
+#   $(".showPrintersBtn").click()
 
 # Initializing the angular app
 @teghApp = angular.module('teghApp', ['inflectionFilters'])

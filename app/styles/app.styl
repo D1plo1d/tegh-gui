@@ -58,12 +58,10 @@ header
 
 .content
   margin-top: 15px
-  flex 1 1 auto
-  display flex
-  flex-flow column
-  > .row, > .row > div, .tab-content
+  &, > .row, > .row > div.content-col, .tab-content
     display flex
     flex-flow column
+    flex 1 1 auto
 
 
 footer
@@ -108,23 +106,19 @@ footer
   font-weight bold
   text-align center
 
-.big-not-found
-  color #BBB
-  font-size 300%
-  font-weight bold
-  text-align center
+  &.centered
+    position absolute
+    top 50%
+    left 0px
+    width 100%
+    margin-top -30px
 
 .small-not-found
   font-size 100%
   font-weight bold
   text-align center
 
-.no-printer-found
-  position absolute
-  top 50%
-  left 0px
-  width 100%
-  margin-top -30px
+div.no-printer-found
   margin-left -150px
 
 .no-camera

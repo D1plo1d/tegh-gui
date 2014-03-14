@@ -48,10 +48,11 @@ html(ng-app="teghApp", ng-csp="")
       //- Body
       .content.container
         .row
-          .col-sm-12(ng-if="p")
+          .col-sm-12.content-col(ng-if="p")
             block content
-          .big-not-found.no-printer-found(ng-if="!p")
-            | Select a 3D Printer
+          div
+            .big-not-found.centered.no-printer-found(ng-if="!p")
+              | Select a 3D Printer
 
       //- Footer
       footer.container
@@ -62,7 +63,9 @@ html(ng-app="teghApp", ng-csp="")
             .pull-right
               .btn.btn-danger(ng-click="estop()") E STOP
               .btn.btn-default.btn-add-print(ng-click="add_job()")
-                | Add Print
+                | Add Job
+              .btn.btn-default.btn-start-print(ng-click="start_print()")
+                | Print
               form.add-print-form.hide
                 input(type="text", ng-model="session")
                 input.add-print-input(type="file", multiple=true, accept=".zip,.gcode,.ngc,.stl,.obj")
