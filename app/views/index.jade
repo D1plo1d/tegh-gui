@@ -15,7 +15,7 @@ block content
         .data-table
           table.table.table-striped(ng-if="(parts()).length")
             tbody
-              tr(ng-repeat="part in parts()")
+              tr(ng-repeat="part in parts()" draggable="true" sortable_row=true data-position="{{part.position}}")
                 td
                   .fa.fa-bars.drag-handle
                   | {{part.file_name}}

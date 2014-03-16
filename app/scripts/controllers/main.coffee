@@ -109,12 +109,12 @@ changePrinter = ($scope, service) ->
   $scope.p = printer.data
   $scope.defaultExtrudeDistance = 5
 
-  $scope.set = (target, attr) ->
+  $scope.set = (target, attr, val) ->
     return if target == null
     # Creating a nested diff object with the right target, attr and value
     (data = {})[target] = {}
-    data[target][attr] = $scope.p[target][attr]
-    console.log data
+    val ?= $scope.p[target][attr]
+    data[target][attr] = val
     printer.send "set", data
 
   $scope.movement = xy_distance: 10, z_distance: 5
@@ -180,16 +180,20 @@ changePrinter = ($scope, service) ->
     ctx = $canvas[0].getContext('2d')
     _resizeCamera()
 
-  $ -> $(window).on "resize", _resizeCamera
 
   _resizeCamera = ->
     return unless ctx?
-    console.log "Resize"
+    # console.log "Resize"
     # $canvas.css 'width',''
     camera = printer.data.camera
     w = $('#camera-canvas').parent().width()
+    console.log w
     ctx.canvas.width = w
     ctx.canvas.height = camera.height / camera.width * w
+
+  $ ->
+    gui.Window.get().on "resize", _resizeCamera
+    $(".manual_ctrl_nav").on "shown.bs.tab", _resizeCamera
 
   _onCameraChange = ->
     return unless ctx?
