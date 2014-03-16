@@ -146,6 +146,9 @@ changePrinter = ($scope, service) ->
   $scope.retryPrint = () ->
     printer.send "retry_print"
 
+  $scope.rm = (id) ->
+    printer.send "rm", id
+
   addJob = ->
     jQuery(".add-print-input")
     .off("change")

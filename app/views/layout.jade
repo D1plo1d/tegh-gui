@@ -16,7 +16,10 @@ html(ng-app="teghApp", ng-csp="")
       a.navmenu-brand(href= "#") Select a 3D Printer
       ul.nav.navmenu-nav(ng-controller="service_discovery")
         li(ng-repeat="service in services", ng-class="{active: active == service}", ng-click="activate(service); changePrinter(service)" data-target= "#teghNavMenu", data-toggle= "offcanvas")
-          a(href="#"){{service.name}} ({{service.address}})
+          a(href="#")
+            //- todo: only show lock icon for verified machines
+            //- i.fa.fa-lock.secure-icon
+            {{service.name}} ({{service.address}})
         li(ng-if="!services.length")
           .small-not-found No 3D Printers Found.
 
