@@ -95,6 +95,7 @@ changePrinter = ($scope, service) ->
 
   printer.on "error", (e) ->
     console.log e
+    console.log e.stack
 
   printer.on "close", (e) ->
     # console.log "closed"
@@ -141,6 +142,9 @@ changePrinter = ($scope, service) ->
 
   $scope.print = () ->
     printer.send "print"
+
+  $scope.retryPrint = () ->
+    printer.send "retry_print"
 
   addJob = ->
     jQuery(".add-print-input")

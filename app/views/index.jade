@@ -12,6 +12,7 @@ block content
                 th Status
                 th Quality
                 th Qty
+                th
         .data-table
           table.table.table-striped(ng-if="(parts()).length")
             tbody
@@ -23,6 +24,9 @@ block content
                 td(ng-if="part.quality") {{part.quality | capitalize}}
                 td(ng-if="!part.quality") N/A
                 td {{part.qty_printed}} / {{part.qty}}
+                td
+                  .btn.btn-default(ng-if="part.status == 'estopped'" ng-click="retryPrint()")
+                    | Retry Print
           .big-not-found.centered(ng-if="!(parts()).length")
             | The Print Queue is Empty
 
