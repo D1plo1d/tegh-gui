@@ -103,7 +103,9 @@ changePrinter = ($scope, service) ->
       $scope.p = null
     else
       $scope.$apply -> $scope.p = null
-    jQuery("nav").offcanvas("show") if changingPrinters == false
+    console.log "closing"
+    console.log changingPrinters == false
+    jQuery("nav:visible").offcanvas("show") if changingPrinters == false
     jQuery("body").off "click", ".btn-add-print"
 
   $scope.p = printer.data
@@ -136,6 +138,9 @@ changePrinter = ($scope, service) ->
     data[axis] = printer.data[axis].distance || $scope.defaultExtrudeDistance
     console.log data
     printer.send "move", data
+
+  $scope.print = () ->
+    printer.send "print"
 
   addJob = ->
     jQuery(".add-print-input")
