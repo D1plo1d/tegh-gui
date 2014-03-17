@@ -6,7 +6,7 @@ teghApp.controller 'main', ($scope, $filter) ->
 
   # For debugging purposes
   window.mainScope = $scope
-
+  $scope.active = null
   $scope.changePrinter = (service) -> changePrinter($scope, service)
 
 printer = null
@@ -62,6 +62,7 @@ changePrinter = ($scope, service) ->
   # console.log "changing printers"
   # console.log service
   # console.log printer
+
   changingPrinters = true
   printer?.close()
   changingPrinters = false
@@ -92,28 +93,53 @@ changePrinter = ($scope, service) ->
   service.processEvent = onPrinterEvent
   printer = new tegh.Client(service)
   Window.printer = printer
+  displayingError = false
 
   printer.on "error", (e) ->
-    console.log e
-    console.log e.stack
+    console.log "error!"
+    if printer.isKnownHost == false or printer.unauthorized
+      displayingError = true
+      $scope.$apply ->
+        console.log service
+        $scope.active = service
+        console.log $scope
+        if printer.unauthorized
+          console.log "unauthorized!"
+          $ -> $("#unauthorized-error-modal").modal("show")
+        else if printer.isKnownHost == false
+          console.log "unknown host!"
+          # $ -> $("#unknown-host-error-modal").modal("show")
+          $ -> $("#new-host-error-modal").modal("show")
+    else
+      console.log e
+      console.log e.stack
+      $scope.$apply ->
+        $scope.error = e.message
+        $ -> $("#generic-error-modal").modal("show")
 
-  # printer.on "initialized", (data) ->
-  #   console.log "initialized"
-  #   console.log data
+
+  printer.on "initialized", (data) ->
+    $scope.p = printer.data
+    $scope.active = service
+    console.log "initialized"
+    # console.log data
+    setTimeout ( -> jQuery("nav:visible").offcanvas "hide" ), 0
 
   printer.on "close", (e) ->
     # console.log "closed"
     phase = $scope.$root.$$phase;
-    if phase == '$apply' or phase == '$digest'
+    nullify = ->
       $scope.p = null
+      $scope.active = null unless displayingError
+    if phase == '$apply' or phase == '$digest'
+      nullify()
     else
-      $scope.$apply -> $scope.p = null
+      $scope.$apply nullify
     console.log "closing"
     console.log changingPrinters == false
     jQuery("nav:visible").offcanvas("show") if changingPrinters == false
     jQuery("body").off "click", ".btn-add-print"
 
-  $scope.p = printer.data
   $scope.defaultExtrudeDistance = 5
 
   $scope.set = (target, attr, val) ->

@@ -61,6 +61,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
         return $(this).css("position") === 'fixed'
       })
       this.$canvas = this.$canvas.add(elems)
+      this.$canvas.data("offcanvas-is-shown", true)
     }
 
     if (this.options.toggle) this.toggle()
@@ -176,7 +177,9 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
   }
 
   OffCanvas.prototype.show = function () {
-    if (this.transitioning || this.$canvas.hasClass('canvas-slid')) return
+    if (this.$canvas.data("offcanvas-is-shown")) return
+    // if (this.transitioning || this.$canvas.hasClass('canvas-slid')) return
+    this.$canvas.data("offcanvas-is-shown", true)
 
     var startEvent = $.Event('show.bs.offcanvas')
     this.$element.trigger(startEvent)
@@ -206,7 +209,9 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
   }
 
   OffCanvas.prototype.hide = function (fast) {
-    if (this.transitioning || !this.$canvas.hasClass('canvas-slid')) return
+    if (this.$canvas.data("offcanvas-is-shown") == false) return
+    // if (this.transitioning || !this.$canvas.hasClass('canvas-slid')) return
+    this.$canvas.data("offcanvas-is-shown", false)
 
     var startEvent = $.Event('hide.bs.offcanvas')
     this.$element.trigger(startEvent)

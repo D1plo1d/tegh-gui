@@ -1,0 +1,86 @@
+
+.modal.fade#generic-error-modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h3.btn.close(data-dismiss="modal" aria-hidden="true") &times;
+        h3.modal-title.text-danger Error
+
+      .modal-body
+        p {{error}}
+
+      .modal-footer
+        .btn.btn-default(data-dismiss="modal") Close
+
+
+.modal.fade#unauthorized-error-modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h3.btn.close(data-dismiss="modal" aria-hidden="true") &times;
+        h3.modal-title 3D Printer Login Required
+
+      .modal-body
+        .form
+          .form-group
+            label.col-sm-2.control-label() Username
+            .col-sm-10
+              input.form-control(type="text", placeholder="Username", required, ng-modal="active.username")
+          .clearfix
+          .form-group
+            label.col-sm-2.control-label Password
+            .col-sm-10
+              input.form-control(type="password", placeholder="Password", ng-modal="active.password")
+          .clearfix
+
+      .modal-footer
+        .btn.btn-default(data-dismiss="modal") Cancel
+        .btn.btn-primary Log In
+
+.modal.fade#unknown-host-error-modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h3.btn.close(data-dismiss="modal" aria-hidden="true") &times;
+        h3.modal-title.text-danger This 3D Printer's Certificate is not trusted!
+
+      .modal-body
+        p.lead
+          | You attempted to reach {{active.name}} on {{active.address}}, but
+          | the 3D Printer presented a certificate that did not match the
+          | previous certifcate of {{active.name}}.
+        p.lead
+          | This could mean an attacker is trying to intercept your
+          | communications to gain access your 3D printer or CAD files.
+      .modal-footer
+        .btn.btn-default Proceed Anyway
+        .btn.btn-default(data-dismiss="modal") Back to Safety
+
+.modal.fade#new-host-error-modal
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h3.btn.close(data-dismiss="modal" aria-hidden="true") &times;
+        h3.modal-title.text-danger New 3D Printer Certificate
+
+      .modal-body
+        p.lead
+          | You are attempting to connect to
+          span.text-info  {{active.name}}
+          |  on
+          span.text-info  {{active.address}}
+          |.
+        p.lead
+          | Since this is your first time connecting to {{active.name}}
+          |  it's security certificate is not yet trusted by your computer.
+        p.lead
+          | This initial connection is insecure and could allow an attacker to
+          | intercept your communications and gain access your 3D printer or
+          | CAD files.
+        p.lead
+          | For security purposes, it is recommended that you attach your
+          | computer via eithernet cable directly to the 3D printer for this
+          | first connection if possible.
+      .modal-footer
+        .btn.btn-default(data-dismiss="modal") Back to Safety
+        .btn.btn-primary Connect

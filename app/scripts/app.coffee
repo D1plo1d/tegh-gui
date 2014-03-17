@@ -36,14 +36,11 @@ new Gaze ["_public/index.html"], (err, gaze) ->
 $sidePanelLinks = null
 
 $ ->
+  # $("#generic-error-modal").modal("show")
+  # $("#unauthorized-error-modal").modal("show")
+  # $("#unknown-host-error-modal").modal("show")
 
-  # $(".switch-small").bootstrapSwitch()
-  # $('.temperature-panel .switch-small')
-  # .bootstrapSwitch('setOnLabel', 'ON')
-  # .bootstrapSwitch('setOffLabel', 'OFF')
-  # console.log $('.temperature-panel .switch-small').length
-  # console.log c.toString() for c in $('.temperature-panel').children()
-
+$ ->
   onResize()
   $(window).on "resize", onResize
 

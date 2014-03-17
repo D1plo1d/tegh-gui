@@ -10,7 +10,4 @@ teghApp.controller 'service_discovery', ($scope, $filter) ->
 
   # dnsSd = new DnsSd protocol: "_tegh._tcp.local", add: update, rm: update
   # dnsSd = new DnsSd protocol: "_construct._tcp.local", add: update, rm: update
-  $scope.active = 3
   $scope.services = []
-  $scope.activate = (service) ->
-    $scope.active = (service)

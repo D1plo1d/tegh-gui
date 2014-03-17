@@ -5,7 +5,7 @@
 @import "ctrl_panel"
 @import "print_queue"
 @import "service_discovery"
-
+@import "error_modals"
 
 // Font Awesome Bootstrap Compatibility Hacks
 [class^="fa-"], [class*=" fa-"]
@@ -18,6 +18,17 @@
 
 .btn .caret
   margin-left: 5px
+
+// OtherBootstrap Hacks
+
+.modal-backdrop
+  z-index 1032
+
+.modal
+  overflow-y hidden
+
+.modal-dialog
+  width 900px
 
 // Inputs
 

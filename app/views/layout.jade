@@ -15,7 +15,7 @@ html(ng-app="teghApp", ng-csp="")
     nav#teghNavMenu.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.canvas-slid.in(role= "navigation")
       a.navmenu-brand(href= "#") Select a 3D Printer
       ul.nav.navmenu-nav(ng-controller="service_discovery")
-        li(ng-repeat="service in services", ng-class="{active: active == service}", ng-click="activate(service); changePrinter(service)" data-target= "#teghNavMenu", data-toggle= "offcanvas")
+        li(ng-repeat="service in services", ng-class="{active: active == service}", ng-click="activate(service); changePrinter(service)")
           a(href="#")
             //- todo: only show lock icon for verified machines
             //- i.fa.fa-lock.secure-icon
@@ -83,6 +83,8 @@ html(ng-app="teghApp", ng-csp="")
             //-   .temperature
             //-     .name Build Platform:
             //-     .value 98&deg;C
+
+    include ./error_modals
 
 
     script(src='js/vendor.js')
