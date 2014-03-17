@@ -4,9 +4,11 @@
   flex 1 1 auto
 
   td, th
-    width: (60/5)%
+    width: (70/6)%
     &:first-child
-      width: 40%
+      width: 30%
+    // &:last-child
+    //   width: 15%
 
   table
     margin-bottom: 0px
@@ -56,6 +58,16 @@
 
     &:hover
       color $brand-danger
+
+  .part-actions .btn
+    float right
+    margin-right 10px
+
+  .quality-not-applicable
+    margin-left 14px
+
+  td input
+    width 60px
 
 /* Prevent the text contents of draggable elements from being selectable. */
 [draggable]

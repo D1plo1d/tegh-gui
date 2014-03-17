@@ -10,24 +10,42 @@ block content
               tr
                 th File
                 th Status
+                th Qty Printed
+                th Total Qty
                 th Quality
-                th Qty
                 th
         .data-table
           table.table.table-striped(ng-if="(parts()).length")
             tbody
               tr(ng-repeat="part in parts()" draggable="true" sortable_row=true data-position="{{part.position}}")
+                //- Filename
                 td
                   .fa.fa-bars.drag-handle
                   | {{part.file_name}}
+                //- Status
                 td {{part.status | capitalize}}
-                td(ng-if="part.quality") {{part.quality | capitalize}}
-                td(ng-if="!part.quality") N/A
-                td {{part.qty_printed}} / {{part.qty}}
+                //- Qty
                 td
-                  .btn.btn-default.pull-left(ng-if="part.status == 'estopped'" ng-click="retryPrint()")
-                    | Retry Print
+                  {{part.qty_printed}} printed
+                td(ng-if="!part.quality")
+                  .quality-not-applicable N/A
+                td
+                  input.form-control(type="number" required ng-model="part.qty" min="1" ng-change="set(part.id, 'qty')")
+                //- Quality
+                td(ng-if="part.quality")
+                  .btn-group
+                    button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown")
+                      | {{part.quality | capitalize}}
+                      span.caret
+                    ul.dropdown-menu(role="menu")
+                      li(ng-repeat="option in (p.print_qualities).options")
+                        a(href="#" ng-click="set(part.id, 'quality', option)")
+                          | {{option | capitalize}}
+                //- Actions (buttons + delete)
+                td.part-actions
                   i.fa.fa-times.delete-part(ng-click="rm(part.id)")
+                  .btn.btn-default(ng-if="part.status == 'estopped'" ng-click="retryPrint()")
+                    | Retry Print
           .big-not-found.centered(ng-if="!(parts()).length")
             | The Print Queue is Empty
 

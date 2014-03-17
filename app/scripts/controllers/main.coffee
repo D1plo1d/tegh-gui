@@ -59,9 +59,9 @@ initPopover = ($el) ->
   return false
 
 changePrinter = ($scope, service) ->
-  console.log "changing printers"
-  console.log service
-  console.log printer
+  # console.log "changing printers"
+  # console.log service
+  # console.log printer
   changingPrinters = true
   printer?.close()
   changingPrinters = false
@@ -71,7 +71,7 @@ changePrinter = ($scope, service) ->
   onPrinterEvent = (event) -> $scope.$apply ->
     printer.processEvent(event)
     _initCamera() if printer.data.camera? and !ctx?
-    _onCameraChange() if event.target == "camera" or event.type == 'initialize'
+    _onCameraChange() if event.target == "camera" or event.type == 'initialized'
 
   # Local Only Properties. These are not part of the tegh protocol spec. They
   # are simply for this particular UI so they are not sent to the server.
@@ -97,6 +97,10 @@ changePrinter = ($scope, service) ->
     console.log e
     console.log e.stack
 
+  # printer.on "initialized", (data) ->
+  #   console.log "initialized"
+  #   console.log data
+
   printer.on "close", (e) ->
     # console.log "closed"
     phase = $scope.$root.$$phase;
@@ -117,7 +121,9 @@ changePrinter = ($scope, service) ->
     # Creating a nested diff object with the right target, attr and value
     (data = {})[target] = {}
     val ?= $scope.p[target][attr]
+    return unless val?
     data[target][attr] = val
+    console.log "setting #{target}.#{attr} to #{val}"
     printer.send "set", data
 
   $scope.movement = xy_distance: 10, z_distance: 5
