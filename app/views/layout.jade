@@ -12,13 +12,14 @@ html(ng-app="teghApp", ng-csp="")
     link(rel='stylesheet', href='css/app.css')
 
   body.canvas-slid(ng-controller="main")
+    div.initial-loading-overlay(ng-hide="true" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1000000000; background: white;")
     nav#teghNavMenu.navmenu.navmenu-default.navmenu-fixed-left.offcanvas.canvas-slid.in(role= "navigation")
       a.navmenu-brand(href= "#") Select a 3D Printer
       ul.nav.navmenu-nav(ng-controller="service_discovery")
         li(ng-repeat="service in services", ng-class="{active: active == service}", ng-click="activate(service); changePrinter(service)")
           a(href="#")
             //- todo: only show lock icon for verified machines
-            //- i.fa.fa-lock.secure-icon
+            i.fa.fa-lock.secure-icon(ng-if="service.knownName")
             {{service.name}} ({{service.address}})
         li(ng-if="!services.length")
           .small-not-found No 3D Printers Found.

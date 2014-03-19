@@ -260,6 +260,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
   }
 
   OffCanvas.prototype.autohide = function (e) {
+    if ($(e.target).closest(".modal").length > 0) return;
     if ($(e.target).closest(this.$element).length === 0) this.hide()
   }
 

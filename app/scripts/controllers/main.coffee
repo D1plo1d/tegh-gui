@@ -7,7 +7,20 @@ teghApp.controller 'main', ($scope, $filter) ->
   # For debugging purposes
   window.mainScope = $scope
   $scope.active = null
+  $scope.user = null
+  $scope.password = null
   $scope.changePrinter = (service) -> changePrinter($scope, service)
+
+  $scope.addCert = ->
+    service = $scope.active
+    service.cert = $scope.cert
+    $scope.changePrinter service
+
+  $scope.login = ->
+    console.log "log in"
+    service = $scope.active
+    $scope.changePrinter service
+
 
 printer = null
 changingPrinters = false
@@ -97,23 +110,25 @@ changePrinter = ($scope, service) ->
 
   printer.on "error", (e) ->
     console.log "error!"
-    if printer.isKnownHost == false or printer.unauthorized
-      displayingError = true
-      $scope.$apply ->
-        console.log service
-        $scope.active = service
-        console.log $scope
-        if printer.unauthorized
-          console.log "unauthorized!"
-          $ -> $("#unauthorized-error-modal").modal("show")
-        else if printer.isKnownHost == false
-          console.log "unknown host!"
-          # $ -> $("#unknown-host-error-modal").modal("show")
-          $ -> $("#new-host-error-modal").modal("show")
-    else
-      console.log e
-      console.log e.stack
-      $scope.$apply ->
+    displayingError = true
+    $scope.$apply ->
+      console.log service
+      console.log printer
+      $scope.active = service
+      $scope.cert = printer.cert
+      console.log $scope
+      if printer.knownName == false and printer.knownCert == false
+        console.log "unknown host!"
+        $ -> $("#new-host-error-modal").modal("show")
+      else if printer.knownName == true and printer.knownCert == false
+        console.log "new cert!"
+        $ -> $("#new-cert-error-modal").modal("show")
+      else if printer.unauthorized
+        console.log "unauthorized!"
+        $ -> $("#unauthorized-error-modal").modal("show")
+      else
+        console.log e
+        console.log e.stack
         $scope.error = e.message
         $ -> $("#generic-error-modal").modal("show")
 
