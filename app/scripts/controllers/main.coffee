@@ -111,18 +111,22 @@ changePrinter = ($scope, service) ->
   printer.on "error", (e) ->
     console.log "error!"
     displayingError = true
-    $scope.$apply ->
-      $scope.active = service
-      $scope.cert = printer.cert
-      $previousBackdrop = $(".modal-backdrop")
-      if $previousBackdrop.length > 0
-        timeout = 300
-      else
-        timeout = 0
-      setTimeout displayError, timeout
+    onError()
 
-  displayError = ->
-    $previousBackdrop = $(".modal-backdrop").remove()
+  onError = (e) -> $scope.$apply ->
+    $scope.active = service
+    $scope.cert = printer.cert
+    $scope.error = e.message
+    $previousBackdrop = $(".modal-backdrop")
+    if $previousBackdrop.length > 0
+      timeout = 300
+    else
+      timeout = 0
+    setTimeout _.partial(displayError, e), timeout
+
+  displayError = (e) ->
+    $previousBackdrop = $(".modal-backdrop")
+    $previousBackdrop.remove()
     if printer.knownName == false and printer.knownCert == false
       console.log "unknown host!"
       $("#new-host-error-modal").modal("show")
@@ -134,8 +138,7 @@ changePrinter = ($scope, service) ->
       $("#unauthorized-error-modal").modal("show")
     else
       console.log e
-      console.log e.stack
-      $scope.error = e.message
+      console.log e.stack if e.stack?
       $("#generic-error-modal").modal("show")
 
   printer.on "initialized", (data) ->
@@ -156,7 +159,7 @@ changePrinter = ($scope, service) ->
     else
       $scope.$apply nullify
     console.log "closing"
-    # console.log changingPrinters == false
+    onError(message: "Connection Lost") if changingPrinters == false
     jQuery("nav:visible").offcanvas("show") if changingPrinters == false
     jQuery("body").off "click", ".btn-add-print"
 

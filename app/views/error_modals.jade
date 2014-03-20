@@ -4,12 +4,9 @@
     .modal-content
       .modal-header
         h3.btn.close(data-dismiss="modal" aria-hidden="true") &times;
-        h3.modal-title.text-danger Error
+        h3.modal-title.text-danger Error: {{error}}
 
       .modal-body
-        p {{error}}
-
-      .modal-footer
         .btn.btn-default(data-dismiss="modal") Close
 
 .modal.fade#unauthorized-error-modal
