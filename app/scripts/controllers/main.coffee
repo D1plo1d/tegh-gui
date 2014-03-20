@@ -117,21 +117,29 @@ changePrinter = ($scope, service) ->
       $scope.active = service
       $scope.cert = printer.cert
       console.log $scope
-      if printer.knownName == false and printer.knownCert == false
-        console.log "unknown host!"
-        $ -> $("#new-host-error-modal").modal("show")
-      else if printer.knownName == true and printer.knownCert == false
-        console.log "new cert!"
-        $ -> $("#new-cert-error-modal").modal("show")
-      else if printer.unauthorized
-        console.log "unauthorized!"
-        $ -> $("#unauthorized-error-modal").modal("show")
+      $previousBackdrop = $(".modal-backdrop")
+      if $previousBackdrop.length > 0
+        timeout = 300
       else
-        console.log e
-        console.log e.stack
-        $scope.error = e.message
-        $ -> $("#generic-error-modal").modal("show")
+        timeout = 0
+      setTimeout displayError, timeout
 
+  displayError = ->
+    $previousBackdrop = $(".modal-backdrop").remove()
+    if printer.knownName == false and printer.knownCert == false
+      console.log "unknown host!"
+      $("#new-host-error-modal").modal("show")
+    else if printer.knownName == true and printer.knownCert == false
+      console.log "new cert!"
+      $("#new-cert-error-modal").modal("show")
+    else if printer.unauthorized
+      console.log "unauthorized!"
+      $("#unauthorized-error-modal").modal("show")
+    else
+      console.log e
+      console.log e.stack
+      $scope.error = e.message
+      $("#generic-error-modal").modal("show")
 
   printer.on "initialized", (data) ->
     $scope.p = printer.data
