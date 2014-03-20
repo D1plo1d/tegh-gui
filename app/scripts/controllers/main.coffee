@@ -112,11 +112,8 @@ changePrinter = ($scope, service) ->
     console.log "error!"
     displayingError = true
     $scope.$apply ->
-      console.log service
-      console.log printer
       $scope.active = service
       $scope.cert = printer.cert
-      console.log $scope
       $previousBackdrop = $(".modal-backdrop")
       if $previousBackdrop.length > 0
         timeout = 300
@@ -159,7 +156,7 @@ changePrinter = ($scope, service) ->
     else
       $scope.$apply nullify
     console.log "closing"
-    console.log changingPrinters == false
+    # console.log changingPrinters == false
     jQuery("nav:visible").offcanvas("show") if changingPrinters == false
     jQuery("body").off "click", ".btn-add-print"
 
@@ -254,7 +251,6 @@ changePrinter = ($scope, service) ->
     # $canvas.css 'width',''
     camera = printer.data.camera
     w = $('#camera-canvas').parent().width()
-    console.log w
     ctx.canvas.width = w
     ctx.canvas.height = camera.height / camera.width * w
 
