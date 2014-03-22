@@ -111,12 +111,12 @@ changePrinter = ($scope, service) ->
   printer.on "error", (e) ->
     console.log "error!"
     displayingError = true
-    onError()
+    onError(e)
 
   onError = (e) -> $scope.$apply ->
     $scope.active = service
     $scope.cert = printer.cert
-    $scope.error = e.message
+    $scope.error = e?.message || "Unknown Error"
     $previousBackdrop = $(".modal-backdrop")
     if $previousBackdrop.length > 0
       timeout = 300
