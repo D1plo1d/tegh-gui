@@ -7,6 +7,15 @@ _ = require("lodash")
 # Dev tools
 require('nw.gui').Window.get().showDevTools()
 
+# Dev: display uncaught errors in the console.
+process.on 'uncaughtException', (err) ->
+  # Sometimes the console object ceases to exist in node webkit
+  return unless console?
+  console.log "----------------------------------------------"
+  console.log "This is really bad. Here's what happened:"
+  console.log err
+  console.log "----------------------------------------------"
+
 # Live reloading
 _console = console
 gui = require('nw.gui')
@@ -20,6 +29,7 @@ new Gaze ["_public/js/app.js", "_public/css/app.css"], (err, gaze) ->
 new Gaze ["_public/index.html"], (err, gaze) ->
   gaze.on 'all', (event, filepath) ->
     setTimeout ( -> win.reload() ), 400
+
 
 # Dev: Autoload dev_null printer on localhost
 # $ ->
