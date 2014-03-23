@@ -5,11 +5,11 @@ mixin title(title, icon)
     a.more-btn(href='#')
       i.fa.fa-plus-square-o
 
-mixin text_input(label, value, units, model, onChange)
+mixin text_input(label, value, units, model, onChange, min)
   - if (label != null)
     .control-label= label
   .controls.input-group
-    input.form-control(type='number', value=value, ng-model="#{model}", ng-change="set(#{onChange})")
+    input.form-control(type="number", required, value=value, ng-model="#{model}", ng-change="set(#{onChange})", min=min)
     span.input-group-addon!= units
 
 mixin dpad(icon, distance, directions)
@@ -43,10 +43,10 @@ mixin move_panel
         each axis, title in {'X and Y': 'xy', 'Z': 'z'}
           .control-label= title
           .control-group
-            mixin text_input(null, 1, "mm", "movement."+axis+"_distance", null)
+            mixin text_input(null, 1, "mm", "movement."+axis+"_distance", null, 0)
           .control-group
             - feedrate = axis+"_feedrate"
-            mixin text_input(null, 1, "mm/s", "(p.axes)."+feedrate, "'axes', '"+feedrate+"'")
+            mixin text_input(null, 1, "mm/s", "(p.axes)."+feedrate, "'axes', '"+feedrate+"'", 0)
 
 mixin extruders_panel
   - extruders = "(k, comp) in extruders()"
@@ -62,8 +62,8 @@ mixin extruders_panel
     .settings-popover.hide
       .control-group(ng-repeat = extruders)
         span(ng-init="comp.distance=defaultExtrudeDistance")
-        mixin text_input("{{k|uppercase}}", 0, "mm", "comp.distance", null)
-        mixin text_input(null, 0, "mm/s", "comp.flowrate", "k, 'flowrate'")
+        mixin text_input("{{k|uppercase}}", 0, "mm", "comp.distance", null, 0)
+        mixin text_input(null, 0, "mm/s", "comp.flowrate", "k, 'flowrate'", 0)
 
 mixin temperature_panel
   - heaters = "(k, comp) in heaters()"
@@ -79,7 +79,7 @@ mixin temperature_panel
 
     .settings-popover.hide
       .control-group(ng-repeat = heaters)
-        mixin text_input("{{k|uppercase}}", "0", "&deg;C", "comp.target_temp", "k, 'target_temp'")
+        mixin text_input("{{k|uppercase}}", "1", "&deg;C", "comp.target_temp", "k, 'target_temp'", 1)
 
 .side-panel
   mixin move_panel
