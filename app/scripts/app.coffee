@@ -4,7 +4,7 @@ path = require("path")
 fs = require("fs")
 _ = require("lodash")
 
-# Dev tools
+# Dev: Chrome Dev Tools
 require('nw.gui').Window.get().showDevTools()
 
 # Dev: display uncaught errors in the console.
@@ -16,7 +16,7 @@ process.on 'uncaughtException', (err) ->
   console.log err
   console.log "----------------------------------------------"
 
-# Live reloading
+# Dev: Live reloading
 _console = console
 gui = require('nw.gui')
 win = gui.Window.get()
@@ -30,7 +30,6 @@ new Gaze ["_public/index.html"], (err, gaze) ->
   gaze.on 'all', (event, filepath) ->
     setTimeout ( -> win.reload() ), 400
 
-
 # Dev: Autoload dev_null printer on localhost
 # $ ->
 #   mainScope.changePrinter
@@ -40,15 +39,16 @@ new Gaze ["_public/index.html"], (err, gaze) ->
 #     path: "/printers/printer_dev_null/"
 #   $(".showPrintersBtn").click()
 
+# Dev: Error Modal Testing
+# $ ->
+#   # $("#generic-error-modal").modal("show")
+#   # $("#unauthorized-error-modal").modal("show")
+#   # $("#unknown-host-error-modal").modal("show")
+
 # Initializing the angular app
 @teghApp = angular.module('teghApp', ['inflectionFilters'])
 
 $sidePanelLinks = null
-
-$ ->
-  # $("#generic-error-modal").modal("show")
-  # $("#unauthorized-error-modal").modal("show")
-  # $("#unknown-host-error-modal").modal("show")
 
 $ ->
   onResize()
