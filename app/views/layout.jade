@@ -38,7 +38,7 @@ html(ng-app="teghApp", ng-csp="")
           .col-sm-12
             //- Navigation
             .pull-right
-              ul.nav.nav-pills
+              ul.nav.nav-pills#nav-main-content
                 //- each tab, i in ['print_queue', 'manual_ctrl', 'settings']
                 each tab, i in ['print_queue', 'manual_ctrl']
                   //- each tab, i in ['print_queue']
@@ -53,7 +53,7 @@ html(ng-app="teghApp", ng-csp="")
       //- Body
       .content.container
         .row
-          .col-sm-12.content-col(ng-if="p")
+          .col-sm-12.content-col(ng-show="p")
             block content
           .col-sm-12.content-col(ng-if="!p")
             .big-not-found.centered.no-printer-found

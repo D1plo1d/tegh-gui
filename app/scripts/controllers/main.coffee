@@ -6,9 +6,11 @@ teghApp.controller 'main', ($scope, $compile, $filter) ->
 
   # For debugging purposes
   window.mainScope = $scope
+
   $scope.active = null
   $scope.user = null
   $scope.password = null
+
   $scope.changePrinter = (service) -> changePrinter($scope, $compile, service)
 
   $scope.addCert = ->
@@ -23,6 +25,7 @@ teghApp.controller 'main', ($scope, $compile, $filter) ->
 
 
 printer = null
+previousPrinter = null
 
 
 b64toBlob = (b64Data, contentType, sliceSize) ->
@@ -54,29 +57,13 @@ changePrinter = ($scope, $compile, service) ->
   # console.log printer
 
   $scope.service = service
-  printer?.close()
+  previousPrinter = printer
 
   onPrinterEvent = (event) -> $scope.$apply ->
     # console.log "New Enabled: #{event.data.target_temp}" if event.data?.enabled?
     printer.processEvent(event)
     _initCamera() if printer.data.camera? and !ctx?
     _onCameraChange() if event.target == "camera" or event.type == 'initialized'
-
-  # Local Only Properties. These are not part of the tegh protocol spec. They
-  # are simply for this particular UI so they are not sent to the server.
-  # localOnly =
-  #   heaters:
-  #     enabled: (comp) -> comp.target_temp > 0
-  #     direction: -> 1
-  #     speed: -> 5
-  #     distance: -> 2
-  #   axes:
-  #     speed: -> 40
-  #     distance: -> 10
-
-  # e0: { current_temp: 178, target_temp: 185, enabled: true, direction: 1, distance: 3, speed: 5, name: "ABS" },
-  # e1: { current_temp: 178, target_temp: 225, enabled: false, direction: -1, distance: 3, speed: 5, name: "PLA" },
-  # b: { current_temp: 178, target_temp: 195, enabled: false, name: "Platform" }
 
   service.processEvent = onPrinterEvent
   printer = new tegh.Client(service)
@@ -119,14 +106,20 @@ changePrinter = ($scope, $compile, service) ->
   printer.on "initialized", (data) ->
     $scope.p = printer.data
     $scope.active = service
+    previousPrinter?.close()
     console.log "initialized"
     # console.log data
-    setTimeout ( -> jQuery("nav:visible").offcanvas "hide" ), 0
+    setTimeout afterInitialized, 0
+
+  afterInitialized = ->
+    # Hiding the "available printers" sidebar navigation
+    jQuery("nav:visible").offcanvas "hide"
 
   printer.on "close", (e) ->
     # console.log "closed"
     phase = $scope.$root.$$phase;
-    nullify = ->
+    active = $scope.service == printer.service
+    nullify = -> if active
       $scope.p = null
       $scope.active = null unless displayingError
     if phase == '$apply' or phase == '$digest'
@@ -134,7 +127,6 @@ changePrinter = ($scope, $compile, service) ->
     else
       $scope.$apply nullify
     console.log "closing"
-    active = $scope.service == printer.service
     onError(message: "Connection Lost") if active and !displayingError
     jQuery("nav:visible").offcanvas("show") if active
     jQuery("body").off "click", ".btn-add-print"
