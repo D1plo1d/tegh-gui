@@ -159,7 +159,8 @@ changePrinter = ($scope, service) ->
     else
       $scope.$apply nullify
     console.log "closing"
-    onError(message: "Connection Lost") if changingPrinters == false
+    console.log displayingError
+    onError(message: "Connection Lost") if changingPrinters == false and !displayingError
     jQuery("nav:visible").offcanvas("show") if changingPrinters == false
     jQuery("body").off "click", ".btn-add-print"
 
