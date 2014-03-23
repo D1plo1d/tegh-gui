@@ -43,8 +43,6 @@ onClick = (e) ->
 toggle = ($el, show) ->
   $el.show() if show
   $el.toggleClass("in", show)
-  # if !show
-  #   $el.delay(1000).queue -> $(this).hide().dequeue()
 
 initClickOutside = ->
   setTimeout ( -> $("body").on "click", onClickOutside ), 100

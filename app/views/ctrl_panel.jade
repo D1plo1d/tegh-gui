@@ -62,7 +62,7 @@ mixin extruders_panel
     .settings-popover.hide
       .control-group(ng-repeat = extruders)
         span(ng-init="comp.distance=defaultExtrudeDistance")
-        mixin text_input("{{k|uppercase}}", 0, "mm", "comp.distance", "k, 'distance'")
+        mixin text_input("{{k|uppercase}}", 0, "mm", "comp.distance", null)
         mixin text_input(null, 0, "mm/s", "comp.flowrate", "k, 'flowrate'")
 
 mixin temperature_panel
@@ -72,7 +72,7 @@ mixin temperature_panel
 
     .side-row(ng-repeat = heaters)
       .pull-right
-        input.switch-small(type="checkbox", toggle-switch=true, data-on="ON", data-off="OFF", data-display="comp.enabled", ng-click="set(k, 'enabled')")
+        input.switch-small(type="checkbox", toggle-switch=true, data-on="ON", data-off="OFF", data-display="comp.enabled", switch-change="set(k, 'enabled')")
       .subtitle.pull-right
         | {{comp.current_temp | number:1}} / {{comp.target_temp | number:1}}&degC
       .title {{k|uppercase}}

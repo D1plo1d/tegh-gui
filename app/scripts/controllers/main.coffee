@@ -57,7 +57,7 @@ changePrinter = ($scope, $compile, service) ->
   printer?.close()
 
   onPrinterEvent = (event) -> $scope.$apply ->
-    console.log "New Target Temp: #{event.data.target_temp}" if event.data?.target_temp?
+    # console.log "New Enabled: #{event.data.target_temp}" if event.data?.enabled?
     printer.processEvent(event)
     _initCamera() if printer.data.camera? and !ctx?
     _onCameraChange() if event.target == "camera" or event.type == 'initialized'
@@ -142,6 +142,8 @@ changePrinter = ($scope, $compile, service) ->
   $scope.defaultExtrudeDistance = 5
 
   $scope.set = (target, attr, val) ->
+    # console.log "set?"
+    # console.log arguments
     return if target == null
     # Creating a nested diff object with the right target, attr and value
     (data = {})[target] = {}
