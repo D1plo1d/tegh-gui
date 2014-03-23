@@ -19,7 +19,8 @@ html(ng-app="teghApp", ng-csp="")
         li(ng-repeat="service in services", ng-class="{active: active == service}", ng-click="activate(service); changePrinter(service)")
           a(href="#")
             //- todo: only show lock icon for verified machines
-            i.fa.fa-lock.secure-icon(ng-if="service.knownName")
+            i.fa.fa-fw.fa-lock.service-icon(ng-if="service.knownName")
+            i.fa.fa-fw.service-icon(ng-if="!(service.knownName)")
             {{service.name}} ({{service.address}})
         li(ng-if="!services.length")
           .small-not-found No 3D Printers Found.
