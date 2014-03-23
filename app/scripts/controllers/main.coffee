@@ -23,7 +23,6 @@ teghApp.controller 'main', ($scope, $filter) ->
 
 
 printer = null
-changingPrinters = false
 
 
 b64toBlob = (b64Data, contentType, sliceSize) ->
@@ -76,10 +75,8 @@ changePrinter = ($scope, service) ->
   # console.log service
   # console.log printer
 
-  changingPrinters = true
-  printer?.close()
-  changingPrinters = false
   $scope.service = service
+  printer?.close()
   setTimeout initAllPopovers, 0
 
   onPrinterEvent = (event) -> $scope.$apply ->
@@ -159,9 +156,9 @@ changePrinter = ($scope, service) ->
     else
       $scope.$apply nullify
     console.log "closing"
-    console.log displayingError
-    onError(message: "Connection Lost") if changingPrinters == false and !displayingError
-    jQuery("nav:visible").offcanvas("show") if changingPrinters == false
+    active = $scope.service == printer.service
+    onError(message: "Connection Lost") if active and !displayingError
+    jQuery("nav:visible").offcanvas("show") if active
     jQuery("body").off "click", ".btn-add-print"
 
   $scope.defaultExtrudeDistance = 5
