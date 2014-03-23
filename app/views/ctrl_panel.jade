@@ -17,7 +17,7 @@ mixin dpad(icon, distance, directions)
     if !icon
       .axis-name Z
     - each data, direction in directions
-      - click = "move({"+data[0]+": "+data[1]+" * movement."+distance+"_distance})"
+      - click = "move({"+data[0]+": "+data[1]+"})"
       .btn.btn-lg.btn-default(class='btn-#{direction}', ng-click=click)
         i.fa(class='fa-chevron-#{direction}')
 
@@ -46,7 +46,7 @@ mixin move_panel
             mixin text_input(null, 1, "mm", "movement."+axis+"_distance", null)
           .control-group
             - feedrate = axis+"_feedrate"
-            mixin text_input(null, 1, "mm/s", "p.axes."+feedrate, "'axes', '"+feedrate+"'")
+            mixin text_input(null, 1, "mm/s", "(p.axes)."+feedrate, "'axes', '"+feedrate+"'")
 
 mixin extruders_panel
   - extruders = "(k, comp) in extruders()"

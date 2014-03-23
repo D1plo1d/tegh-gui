@@ -2,14 +2,14 @@
 # since AngularJS won't be able to inject variables when minified.
 # You can also restrict angularjs injection keywords in
 # configuration file and skip this.
-teghApp.controller 'main', ($scope, $filter) ->
+teghApp.controller 'main', ($scope, $compile, $filter) ->
 
   # For debugging purposes
   window.mainScope = $scope
   $scope.active = null
   $scope.user = null
   $scope.password = null
-  $scope.changePrinter = (service) -> changePrinter($scope, service)
+  $scope.changePrinter = (service) -> changePrinter($scope, $compile, service)
 
   $scope.addCert = ->
     service = $scope.active
@@ -48,7 +48,7 @@ b64toBlob = (b64Data, contentType, sliceSize) ->
   )
   blob
 
-changePrinter = ($scope, service) ->
+changePrinter = ($scope, $compile, service) ->
   # console.log "changing printers"
   # console.log service
   # console.log printer
@@ -57,6 +57,7 @@ changePrinter = ($scope, service) ->
   printer?.close()
 
   onPrinterEvent = (event) -> $scope.$apply ->
+    console.log "New Target Temp: #{event.data.target_temp}" if event.data?.target_temp?
     printer.processEvent(event)
     _initCamera() if printer.data.camera? and !ctx?
     _onCameraChange() if event.target == "camera" or event.type == 'initialized'
@@ -148,6 +149,7 @@ changePrinter = ($scope, service) ->
     return unless val?
     data[target][attr] = val
     console.log "setting #{target}.#{attr} to #{val}"
+    console.log data
     printer.send "set", data
 
   $scope.movement = xy_distance: 10, z_distance: 5

@@ -24,14 +24,15 @@ block content
                   | {{part.file_name}}
                 //- Status
                 td {{part.status | capitalize}}
-                //- Qty
+                //- Qty Printed
                 td
                   {{part.qty_printed}} printed
-                td(ng-if="!part.quality")
-                  .quality-not-applicable N/A
+                //- Total Qty
                 td
                   input.form-control(type="number" required ng-model="part.qty" min="1" ng-change="set(part.id, 'qty')")
                 //- Quality
+                td(ng-if="!part.quality")
+                  .quality-not-applicable N/A
                 td(ng-if="part.quality")
                   .btn-group
                     button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown")
