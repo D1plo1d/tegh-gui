@@ -50,7 +50,7 @@ mixin move_panel
 
 mixin extruders_panel
   - extruders = "(k, comp) in extruders()"
-  .extruders-panel.sub-panel
+  .extruders-panel.sub-panel(ng-if="extruders().length > 0")
     mixin title("Extruders", "fa-tint")
     .side-row(ng-repeat = extruders)
       .btn-group.pull-right
@@ -67,7 +67,7 @@ mixin extruders_panel
 
 mixin temperature_panel
   - heaters = "(k, comp) in heaters()"
-  .temperature-panel.sub-panel
+  .temperature-panel.sub-panel(ng-if="heaters().length > 0")
     mixin title("Temperature", "fa-bar-chart-o")
 
     .side-row(ng-repeat = heaters)

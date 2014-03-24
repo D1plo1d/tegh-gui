@@ -163,6 +163,7 @@ changePrinter = ($scope, $compile, service) ->
     console.log arguments
     data = {}
     data[axis] = printer.data[axis].distance || $scope.defaultExtrudeDistance
+    data[axis] *= direction
     console.log data
     printer.send "move", data
 
