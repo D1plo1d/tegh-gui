@@ -62,6 +62,14 @@ changePrinter = ($scope, $compile, service) ->
   onPrinterEvent = (event) -> $scope.$apply ->
     # console.log "New Enabled: #{event.data.target_temp}" if event.data?.enabled?
     printer.processEvent(event)
+    # update the heaters and the extruders
+    $scope.heaters = _.pick printer.data, (data, key) -> data.type == "heater"
+    if _.size($scope.heaters) == 0
+      $scope.heaters = null
+    $scope.extruders = _.pick $scope.heaters, (data, key) -> key != "b"
+    if _.size($scope.heaters) == 0
+      $scope.extruders = null
+    # Update the camera
     _initCamera() if printer.data.camera? and !ctx?
     _onCameraChange() if event.target == "camera" or event.type == 'initialized'
 
@@ -194,15 +202,9 @@ changePrinter = ($scope, $compile, service) ->
   $scope.estop = ->
     printer.send "estop"
 
-  $scope.heaters = ->
-    _.pick printer.data, (data, key) -> data.type == "heater"
-
   $scope.parts = ->
     parts = _.pick printer.data, (data, key) -> data.type == "part"
     _.sortBy parts, "position"
-
-  $scope.extruders = ->
-    _.pick $scope.heaters(), (data, key) -> key != "b"
 
   $scope.extrudeText = (direction) ->
     if direction == 1 then "Extrude" else "Retract"

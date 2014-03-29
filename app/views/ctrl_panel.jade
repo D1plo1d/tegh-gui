@@ -49,8 +49,8 @@ mixin move_panel
             mixin text_input(null, 1, "mm/s", "(p.axes)."+feedrate, "'axes', '"+feedrate+"'", 0)
 
 mixin extruders_panel
-  - extruders = "(k, comp) in extruders()"
-  .extruders-panel.sub-panel(ng-if="extruders().length > 0")
+  - extruders = "(k, comp) in extruders"
+  .extruders-panel.sub-panel(ng-if="extruders")
     mixin title("Extruders", "fa-tint")
     .side-row(ng-repeat = extruders)
       .btn-group.pull-right
@@ -66,8 +66,8 @@ mixin extruders_panel
         mixin text_input(null, 0, "mm/s", "comp.flowrate", "k, 'flowrate'", 0)
 
 mixin temperature_panel
-  - heaters = "(k, comp) in heaters()"
-  .temperature-panel.sub-panel(ng-if="heaters().length > 0")
+  - heaters = "(k, comp) in heaters"
+  .temperature-panel.sub-panel(ng-if="heaters")
     mixin title("Temperature", "fa-bar-chart-o")
 
     .side-row(ng-repeat = heaters)
