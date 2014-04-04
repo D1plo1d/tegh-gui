@@ -1,13 +1,13 @@
-# Tegh Brower Plugins
+# Tegh GUI
 
 ## Dev Requirements
 
-1. Install node and npm
-2. `npm install -g bower && npm install -g brunch`
+1. Install node, node-webkit, and npm
+2. Install brunch >=1.7 and bower. If these are not in your distro's repo, they can also be installed using npm: `npm install -g bower && npm install -g brunch`
 
 ## Development
 
-The Tegh Browser Plugins uses brunch to automatically compile and reload any changes to the source files.
+The Tegh GUI uses brunch to automatically compile and reload any changes to the source files.
 
 This does not always work. To make sure the page is reloaded as expected always resave:
 * **app/styles/app.styl** if you are editing a css or styl file
@@ -16,9 +16,10 @@ This does not always work. To make sure the page is reloaded as expected always 
 
 * Source files are located in the `app` directory.
 * Compiled files are located in `_public`. Do not edit these directly. They are generated from the `app` directory files.
+* The node-webkit toolbar can be enabled in **package.json**  Further debugging can be accomplished by adding `enable-logging --v=1` to the nw command line options.
 
-### Running Brunch
+### Running Tegh-GUI:
 
-1. run `bower install` to download any new client side libraries
-2. run `brunch watch --server` from the tegh browser plugin folder
-3. open **_public/index.html** in chrome. This page will automatically reload changes.
+1. run `npm install && bower install` to download any new client side libraries
+2. run `brunch watch` to build
+3. run `nw .` to launch Tegh-GUI
