@@ -60,6 +60,7 @@ changePrinter = ($scope, $compile, service) ->
   previousPrinter = printer
 
   onPrinterEvent = (event) -> $scope.$apply ->
+    # console.log event
     # console.log "New Enabled: #{event.data.target_temp}" if event.data?.enabled?
     printer.processEvent(event)
     # update the heaters and the extruders
