@@ -6,11 +6,12 @@ teghApp.directive "toggleSwitch", ->
     display = attrs.display
     keys = display.split(".")
     $el = $(element).bootstrapSwitch()
-    $el.bootstrapSwitch('setOnLabel', attrs.on) if attrs.on?
-    $el.bootstrapSwitch('setOffLabel', attrs.off) if attrs.off?
+    $(element).bootstrapSwitch('onText', attrs.on) if attrs.on?
+    $(element).bootstrapSwitch('offText', attrs.off) if attrs.off?
 
-    $el.on "switch-change", (e, data) ->
-      return if data.value == previousVal
+    # OK, this was right:
+    $el.on "switchChange.bootstrapSwitch", (e, data) ->
+      return if data== previousVal
       phase = scope.$root.$$phase;
       if phase == '$apply' or phase == '$digest'
         onSwitchChange data
@@ -18,13 +19,13 @@ teghApp.directive "toggleSwitch", ->
         scope.$apply -> onSwitchChange data
 
     onSwitchChange = (data) ->
-      console.log "value: #{data.value}"
-      previousVal = data.value
-      scope[keys[0]][keys[1]] = data.value
+      console.log "value: #{data}"
+      previousVal = data
+      scope[keys[0]][keys[1]] = data
       scope.$eval switchChange
 
     scope.$watch display, (value) ->
       return if value == previousVal
       previousVal = value
       console.log "autosetting to #{value}"
-      $el.bootstrapSwitch 'setState', value
+      $el.bootstrapSwitch 'state', value
